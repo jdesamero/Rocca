@@ -32,6 +32,19 @@ class Rocca_Model
 		);
 		
 		
+		// class registry init
+		$oClassReg = Rocca_Class_Registry::getInstance()
+			->registerModel( $this->_sInstanceClass, sprintf( '%s_RegistryHandler', __CLASS__ ), $this->_aMapping )
+		;
+		
+		// $oClassReg->registerModel( ... ) same as $oClassReg->register( 'model', ... );
+		
+		// use
+		// $oClassReg->getModel( 'map' );			// same as $oClassReg->get( 'model', 'map' );
+		
+		// print_r( $oClassReg->getModel( 'map' ) );
+		
+		
 		// set model properties
 		
 		if ( is_array( $aModel ) ) {
