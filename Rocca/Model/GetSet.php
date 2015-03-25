@@ -1,7 +1,7 @@
 <?php
 
-// allow magic set() and get() methods on entity
-trait Rocca_Model_Trait
+// allow magic get() and set() methods on entity
+trait Rocca_Model_GetSet
 {
 	
 	protected $_oModel = NULL;

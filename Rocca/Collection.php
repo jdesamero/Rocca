@@ -4,8 +4,8 @@ class Rocca_Collection
 	implements Iterator, ArrayAccess, Countable
 {
 	
-	use Rocca_Plugin_Trait;
-	use Rocca_Collection_Trait;
+	use Rocca_Plugin_Assign;
+	use Rocca_Collection_Array;
 	
 	
 	protected $_sInstanceClass = NULL;

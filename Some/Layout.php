@@ -9,7 +9,7 @@ class Some_Layout
 	use Rocca_Singleton;
 	use Rocca_Echoable;
 	use Rocca_Data;
-	use Rocca_Plugin_Trait;
+	use Rocca_Plugin_Assign;
 	use Rocca_HandleCall;
 	
 	

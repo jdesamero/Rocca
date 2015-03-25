@@ -3,10 +3,10 @@
 class Rocca_Model
 {
 
-	use Rocca_Model_Trait;
+	use Rocca_Model_GetSet;
 	use Rocca_Echoable;
 	use Rocca_Data;
-	use Rocca_Plugin_Trait;
+	use Rocca_Plugin_Assign;
 	use Rocca_HandleCall;
 	
 	

@@ -1,6 +1,7 @@
 <?php
 
-trait Rocca_Plugin_Trait
+// assign plugins to class
+trait Rocca_Plugin_Assign
 {
 	
 	protected $_aPlugins = array();

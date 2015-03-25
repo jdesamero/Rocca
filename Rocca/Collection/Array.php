@@ -1,6 +1,7 @@
 <?php
 
-trait Rocca_Collection_Trait
+// implements methods for Iterator, ArrayAccess, Countable
+trait Rocca_Collection_Array
 {
 	
 	protected $_aCollection = array();
