@@ -32,17 +32,17 @@ class Rocca_Model
 		);
 		
 		
-		// class registry init
-		$oClassReg = Rocca_Class_Registry::getInstance()
-			->registerModel( $this->_sInstanceClass, sprintf( '%s_RegistryHandler', __CLASS__ ), $this->_aMapping )
-		;
+		// class handler init
+		$oClassHandler = Rocca_Class_Handler::factory(
+			$this->_sInstanceClass, sprintf( '%s_ClassHandler', __CLASS__ ), $this->_aMapping
+		);
 		
-		// $oClassReg->registerModel( ... ) same as $oClassReg->register( 'model', ... );
 		
-		// use
-		// $oClassReg->getModel( 'map' );			// same as $oClassReg->get( 'model', 'map' );
+		// if called first with full args, subsequent calls only require the instance class
+		$oSameHandler = Rocca_Class_Handler::factory( $this->_sInstanceClass );
 		
-		// print_r( $oClassReg->getModel( 'map' ) );
+		print_r( $oSameHandler->getMapping()->get( 'login' ) );
+		echo "\n\n";
 		
 		
 		// set model properties
