@@ -97,9 +97,36 @@ $oFriends = new Furdi_Friend_Collection( $aFriends );
 $oFriends->add( $oSomeFriend );
 
 foreach ( $oFriends as $oFriend ) {
-	printf( "%d - %s (%s)\n", $oFriend->getId(), $oFriend->getFullName(), $oFriend->getUsername() );
+	
+	printf(
+		"%d - %s (%s, %s)\n",
+		$oFriend->getId(),
+		$oFriend->getFullName(),
+		$oFriend->getUsername(),
+		$oFriend->getLogin()
+	);
+	
 }
 
+print_r( $oFriends->pluckId() );
+print_r( $oFriends->pluck( 'login' ) );
+// print_r( $oFriends->pluck( 'first_name' ) );
+
+print_r( $oFriends->pluck( '##FirstName## [##__idx##:##LastName##]' ) );
+
+print_r( $oFriends->pluck( '<option value="##Id##">##LastName##, ##FirstName##</option>' ) );
+
+
+print_r( $oFriends->implode( 'login' ) );
+echo "\n\n";
+
+print_r( $oFriends->implode( '##Id##:##Login##', ' | ' ) );
+echo "\n\n";
+
+print_r( $oFriends->implodeId() );
+echo "\n\n";
+
+print_r( $oFriends->implodeId( ':' ) );
 echo "\n\n";
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

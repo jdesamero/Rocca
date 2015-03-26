@@ -14,7 +14,7 @@ class Rocca_Utility_Mapping
 		foreach ( $aMapping as $sMap ) {
 			
 			// map notation ex: 'some:some_alias|some_other'
-			// some --> some, some_alias --> some, some_other --> some
+			// some --> some; some_alias --> some; some_other --> some
 			
 			list( $sTarget, $sAliases ) = explode( ':', $sMap );
 			$aAliases = explode( '|', $sAliases );
@@ -30,8 +30,15 @@ class Rocca_Utility_Mapping
 	}
 	
 	// alias getData()
-	public function get( $sKey ) {
-		return $this->dataGet( $sKey );
+	public function get( $sKey, $bReturnKey = FALSE ) {
+		
+		if ( $sMapped = $this->dataGet( $sKey ) ) {
+			return $sMapped;
+		}
+		
+		// if $bReturnKey is TRUE and no matched mapping was found, then
+		// return $sKey, otherwise return NULL
+		return ( $bReturnKey ) ? $sKey : NULL ;
 	}
 	
 	

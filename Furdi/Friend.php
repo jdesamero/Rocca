@@ -4,7 +4,7 @@
 class Furdi_Friend extends Rocca_Model
 {
 	
-	protected $_aMapping = array(
+	protected $_aModelPropMapping = array(
 		'username:login',
 		'id:friend_id|the_friend_id'
 	);

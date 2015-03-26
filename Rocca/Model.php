@@ -15,7 +15,8 @@ class Rocca_Model
 	protected $_sInstanceClass = NULL;
 	protected $_sCollectionClass = NULL;
 	
-	protected $_aMapping = array();					// aliasing system
+	protected $_aModelPropMapping = array();					// aliasing system
+	protected $_bUseModelPropMapping = TRUE;
 	
 	
 	
@@ -34,15 +35,9 @@ class Rocca_Model
 		
 		// class handler init
 		$oClassHandler = Rocca_Class_Handler::factory(
-			$this->_sInstanceClass, sprintf( '%s_ClassHandler', __CLASS__ ), $this->_aMapping
+			$this->_sInstanceClass, sprintf( '%s_ClassHandler', __CLASS__ ), $this->_aModelPropMapping
 		);
 		
-		
-		// if called first with full args, subsequent calls only require the instance class
-		$oSameHandler = Rocca_Class_Handler::factory( $this->_sInstanceClass );
-		
-		print_r( $oSameHandler->getMapping()->get( 'login' ) );
-		echo "\n\n";
 		
 		
 		// set model properties
