@@ -96,6 +96,10 @@ $aFriends = array(
 $oFriends = new Furdi_Friend_Collection( $aFriends );
 $oFriends->add( $oSomeFriend );
 
+$oEmptyFriend = new Furdi_Friend();
+$oFriends->add( $oEmptyFriend );
+
+
 foreach ( $oFriends as $oFriend ) {
 	
 	printf(
@@ -128,6 +132,7 @@ echo "\n\n";
 
 print_r( $oFriends->implodeId( ':' ) );
 echo "\n\n";
+
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

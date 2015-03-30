@@ -49,45 +49,19 @@ class Rocca_Collection
 	
 	
 	// inspired by Backbone.js
-	public function pluck( $sFormat ) {
+	public function pluck( $mFormat ) {
 		
-		// determine what $sFormat is
-		if ( FALSE === strpos( $sFormat, '##' ) ) {
-			
-			// the given $sFormat is a basic prop
-			$sProp = $sFormat;
-			
-		} else {
-			
-			$aRegs = array();
-			preg_match_all( '/##([^#]+)##/', $sFormat, $aRegs );
-			
-			$aProps = $aRegs[ 1 ];
-		}
-		
+		$oPlaceholder = Rocca_Utility_Placeholder::create( $mFormat );
 		
 		// assemble
 		$aRes = array();
 		
 		foreach ( $this as $i => $oModel ) {
 			
-			$sValue = NULL;
-			
-			if ( $sProp ) {
-				
-				$sGetMethod = sprintf( 'get%s', Rocca_Inflector::camelize( $sProp ) );
-				
-				$sValue = $oModel->$sGetMethod();
-				
-			} elseif ( count( $aProps ) > 0 ) {
-				
-				$sValue = $oModel->modelFormattedGet(
-					array( $sFormat, $aProps ),
-					array( '__idx' => $i )
-				);
-			}
-			
-			$aRes[] = $sValue;
+			$aRes[] = $oModel->modelFormattedGet(
+				$oPlaceholder,
+				array( '__idx' => $i )
+			);			
 		}
 		
 		return $aRes;

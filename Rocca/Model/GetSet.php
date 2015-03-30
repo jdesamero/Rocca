@@ -9,6 +9,7 @@ trait Rocca_Model_GetSet
 	/* NOTE: These should be implemented by the class use'ing this
 	 *    protected $_sInstanceClass = NULL;
 	 *    protected $_bUseModelPropMapping = TRUE | FALSE;
+	 *    protected $_aModelDefaultValues = NULL | array();
 	 */
 	
 	
@@ -16,7 +17,13 @@ trait Rocca_Model_GetSet
 	public function modelInit() {
 
 		if ( NULL === $this->_oModel ) {
+			
 			$this->_oModel = new StdClass;
+			
+			if ( is_array( $this->_aModelDefaultValues ) ) {
+				$this->modelRawSet( $this->_aModelDefaultValues );
+			}
+			
 		}
 		
 		return $this;
@@ -105,34 +112,16 @@ trait Rocca_Model_GetSet
 	//
 	public function modelFormattedGet( $mFormat, $aValues = array() ) {
 		
-		if ( is_array( $mFormat ) ) {
-			
-			list( $sFormat, $aProps ) = $mFormat;
-			
-		} else {
-			
-			$sFormat = $mFormat;
-			
-			$aRegs = array();
-			preg_match_all( '/##([^#]+)##/', $sFormat, $aRegs );
-			
-			$aProps = $aRegs[ 1 ];
-		}
+		$oThis = $this;
 		
-		//
-		foreach ( $aProps as $sHashProp ) {
-			
-			if ( isset( $aValues[ $sHashProp ] ) ) {
-				$sReplace = $aValues[ $sHashProp ];
-			} else {
-				$sGetMethod = sprintf( 'get%s', Rocca_Inflector::camelize( $sHashProp ) );
-				$sReplace = $this->$sGetMethod();
-			}
-			
-			$sFormat = str_replace( sprintf( '##%s##', $sHashProp ), $sReplace, $sFormat );
-		}
+		$oPlaceholder = Rocca_Utility_Placeholder::create( $mFormat );
 		
-		return $sFormat;
+		$fGetCallback = function ( $sKey ) use ( $oThis ) {
+			$sGetMethod = sprintf( 'get%s', Rocca_Inflector::camelize( $sKey ) );
+			return $oThis->$sGetMethod();
+		};
+		
+		return $oPlaceholder->getPopulated( $aValues, $fGetCallback, $fGetCallback );
 	}
 	
 	

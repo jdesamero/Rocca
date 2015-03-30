@@ -44,6 +44,8 @@ class Rocca_Model
 		
 		if ( is_array( $aModel ) ) {
 			$this->modelRawSet( $aModel );
+		} else {
+			$this->modelInit();			// set with $this->_aModelDefaultValues, if defined
 		}
 		
 	}

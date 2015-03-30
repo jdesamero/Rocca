@@ -9,6 +9,12 @@ class Furdi_Friend extends Rocca_Model
 		'id:friend_id|the_friend_id'
 	);
 	
+	protected $_aModelDefaultValues = array(
+		'id' => NULL,
+		'username' => NULL,
+		'first_name' => NULL,
+		'last_name' => NULL		
+	);
 	
 	
 	//
