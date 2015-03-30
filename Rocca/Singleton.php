@@ -49,7 +49,9 @@ trait Rocca_Singleton
 		
 		if ( !$this->_bSingletonCalledInit ) {
 			
-			$this->doInit();
+			$aArgs = func_get_args();
+			
+			call_user_func_array( array( $this, 'doInit' ), $aArgs );
 			
 			$this->_bSingletonCalledInit = TRUE;
 		}
@@ -57,10 +59,32 @@ trait Rocca_Singleton
 		return $this;
 	}
 	
+	
+	//
+	public function getSingletonCalledInit() {
+		return $this->_bSingletonCalledInit;
+	}
+	
+	
+	
 	// hook method to be implemented by sub-class
 	public function doInit() {
 	
 	}
+	
+	
+	//
+	public function reInit() {
+		
+		$aArgs = func_get_args();
+		
+		$this->_bSingletonCalledInit = FALSE;
+		
+		call_user_func_array( array( $this, 'init' ), $aArgs );
+		
+		return $this;
+	}
+	
 	
 }
 

@@ -9,7 +9,6 @@ echo "\n\n";
 require_once 'Rocca/Autoload.php';
 
 Rocca_Autoload::getInstance()
-	->registerPath( dirname( __FILE__ ) )
 	->registerNamespace( 'Furdi', 'Some' )
 	->init()
 ;
