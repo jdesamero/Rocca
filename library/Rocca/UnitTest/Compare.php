@@ -90,7 +90,17 @@ class Rocca_UnitTest_Compare
 			
 		} elseif ( is_scalar( $mValue ) || empty( $mValue ) ) {
 			
-			$sRes = sprintf( '"%s" (%s)', $mValue, gettype( $mValue ) );					
+			$sFmtValue = $mValue;
+			
+			if ( is_string( $mValue ) ) {
+				$sFmtValue = sprintf( '"%s"', $mValue );
+			} elseif ( is_bool( $mValue ) ) {
+				$sFmtValue = $mValue ? 'TRUE' : 'FALSE' ;
+			} elseif ( is_null( $mValue ) ) {
+				$mValue = 'NULL';
+			}
+			
+			$sRes = sprintf( '%s (%s)', $sFmtValue, gettype( $mValue ) );					
 		
 		} else {
 			
