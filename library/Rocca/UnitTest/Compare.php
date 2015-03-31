@@ -40,7 +40,7 @@ class Rocca_UnitTest_Compare
 	public function getResultMessage() {
 		
 		return sprintf(
-			'%s Expected: "%s", result: "%s".',
+			'%s Expected: %s, result: %s.',
 			$this->getFailMessage(),
 			$this->getExpectedFormatted(),
 			$this->getResultFormatted()
@@ -63,12 +63,12 @@ class Rocca_UnitTest_Compare
 	
 	//
 	public function getExpectedFormatted() {
-		return sprintf( '%s', $this->_mValue );
+		return sprintf( '"%s"', $this->_mValue );
 	}
 	
 	//
 	public function getResultFormatted() {
-		return sprintf( '%s', $this->_mTestValue );
+		return sprintf( '"%s"', $this->_mTestValue );
 	}
 	
 	
@@ -82,7 +82,7 @@ class Rocca_UnitTest_Compare
 		
 		if ( is_object( $mValue ) ) {
 			
-			$sRes = sprintf( 'class %s', get_class( $mValue ) );
+			$sRes = sprintf( '"class %s"', get_class( $mValue ) );
 			
 			if ( $this->_bIncludeObjectHash ) {
 				$sRes .= sprintf( ' (%s)', spl_object_hash( $mValue ) );
@@ -90,11 +90,11 @@ class Rocca_UnitTest_Compare
 			
 		} elseif ( is_scalar( $mValue ) || empty( $mValue ) ) {
 			
-			$sRes = sprintf( '%s (%s)', $mValue, gettype( $mValue ) );					
+			$sRes = sprintf( '"%s" (%s)', $mValue, gettype( $mValue ) );					
 		
 		} else {
 			
-			$sRes = sprintf( '%s', gettype( $mValue ) );		
+			$sRes = sprintf( '"%s"', gettype( $mValue ) );		
 		}
 		
 		return $sRes;	

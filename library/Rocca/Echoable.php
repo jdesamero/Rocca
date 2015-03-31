@@ -27,13 +27,7 @@ trait Rocca_Echoable
 		$sMethod = sprintf( 'echo%s', Rocca_Inflector::camelize( $sProp ) );
 		
 		if ( method_exists( $this, $sMethod ) ) {
-			
-			ob_start();
-			call_user_func_array( array( $this, $sMethod ), $aArgs );
-			$sOut = ob_get_contents();
-			ob_end_clean();
-			
-			return $sOut;
+			return Rocca_String::fromObArray( array( $this, $sMethod ), $aArgs );
 		}
 		
 		return $this->modelRawGet( $sProp );

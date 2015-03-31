@@ -4,6 +4,7 @@
 
 require_once sprintf( '%s/Singleton.php', dirname( __FILE__ ) );
 
+//
 class Rocca_Autoload
 {
 	

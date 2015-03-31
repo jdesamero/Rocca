@@ -6,9 +6,10 @@ echo "\n\n";
 // echo phpversion();
 
 
-require_once 'Rocca/Autoload.php';
+require_once '../library/Rocca/Autoload.php';
 
 Rocca_Autoload::getInstance()
+	->registerPath( sprintf( '%s/library', dirname( __FILE__ ) ) )
 	->registerNamespace( 'Furdi', 'Some' )
 	->init()
 ;
