@@ -1,16 +1,17 @@
 <?php
 
 //
-class LoadMe
+class Other
 {
 	
-	protected $_sMe = 'This is LoadMe';
+	protected $_sMe = 'This is the ROOT';
 	
 	
 	//
 	public function getMe() {
 		return $this->_sMe;
 	}
+	
 	
 	
 }

@@ -11,7 +11,7 @@ class RoccaTest_Class extends Rocca_UnitTest
 		
 		Rocca_Autoload::getInstance()
 			->registerPath( sprintf( '%s/test_files/library', dirname( dirname( __FILE__ ) ) ) )
-			->registerNamespace( 'Related' )
+			->registerNamespace( 'Other' )
 		;
 		
 		
@@ -28,20 +28,20 @@ class RoccaTest_Class extends Rocca_UnitTest
 					
 					->assertStrictlyEqual(
 						'Related add suffix',
-						'Related_Base',
-						Rocca_Class::resolveRelated( 'Related', '_Base' )
+						'Other_Related_Base',
+						Rocca_Class::resolveRelated( 'Other_Related', '_Base' )
 					)
 					
 					->assertStrictlyEqual(
 						'Related add suffix 2',
-						'Related_Base_Sibling',
-						Rocca_Class::resolveRelated( 'Related_Base', '_Sibling' )
+						'Other_Related_Base_Sibling',
+						Rocca_Class::resolveRelated( 'Other_Related_Base', '_Sibling' )
 					)
 					
 					->assertStrictlyEqual(
 						'Related add suffix 3',
 						NULL,
-						Rocca_Class::resolveRelated( 'Related_Base', '_Bogus' )
+						Rocca_Class::resolveRelated( 'Other_Related_Base', '_Bogus' )
 					)
 					
 					
@@ -49,14 +49,14 @@ class RoccaTest_Class extends Rocca_UnitTest
 					
 					->assertStrictlyEqual(
 						'Related remove suffix',
-						'Related',
-						Rocca_Class::resolveRelated( 'Related_Base', '', '_Base' )
+						'Other_Related',
+						Rocca_Class::resolveRelated( 'Other_Related_Base', '', '_Base' )
 					)
 					
 					->assertStrictlyEqual(
 						'Related remove suffix 2',
-						'Related_Base',
-						Rocca_Class::resolveRelated( 'Related_Base_Sibling', '', '_Sibling' )
+						'Other_Related_Base',
+						Rocca_Class::resolveRelated( 'Other_Related_Base_Sibling', '', '_Sibling' )
 					)
 					
 					
@@ -64,14 +64,14 @@ class RoccaTest_Class extends Rocca_UnitTest
 					
 					->assertStrictlyEqual(
 						'Related remove and add',
-						'Related_Base_Cousin',
-						Rocca_Class::resolveRelated( 'Related_Base_Sibling', '_Cousin', '_Sibling' )
+						'Other_Related_Base_Cousin',
+						Rocca_Class::resolveRelated( 'Other_Related_Base_Sibling', '_Cousin', '_Sibling' )
 					)
 					
 					->assertStrictlyEqual(
 						'Related remove and add 2',
-						'Related_Base_Sibling',
-						Rocca_Class::resolveRelated( 'Related_Base_Cousin', '_Sibling', '_Cousin' )
+						'Other_Related_Base_Sibling',
+						Rocca_Class::resolveRelated( 'Other_Related_Base_Cousin', '_Sibling', '_Cousin' )
 					)
 					
 					
@@ -79,26 +79,26 @@ class RoccaTest_Class extends Rocca_UnitTest
 					
 					->assertStrictlyEqual(
 						'Default class',
-						'Related_Other',
-						Rocca_Class::resolveRelated( 'Related', '_Base', '', 'Related_Other' )
+						'Other_Related_Other',
+						Rocca_Class::resolveRelated( 'Other_Related', '_Base', '', 'Other_Related_Other' )
 					)
 					
 					->assertStrictlyEqual(
 						'Default class 2',
-						'Related_Other',
-						Rocca_Class::resolveRelated( 'Related', '_Bogus', '', 'Related_Other' )
+						'Other_Related_Other',
+						Rocca_Class::resolveRelated( 'Other_Related', '_Bogus', '', 'Other_Related_Other' )
 					)
 					
 					->assertStrictlyEqual(
 						'Default class 3',
-						'Related_Other',
-						Rocca_Class::resolveRelated( 'Related_Base_Sibling', '', '_Sibling', 'Related_Other' )
+						'Other_Related_Other',
+						Rocca_Class::resolveRelated( 'Other_Related_Base_Sibling', '', '_Sibling', 'Other_Related_Other' )
 					)
 					
 					->assertStrictlyEqual(
 						'Default class 4',
-						'Related_Other',
-						Rocca_Class::resolveRelated( 'Related_Base_Sibling', '_Cousin', '_Sibling', 'Related_Other' )
+						'Other_Related_Other',
+						Rocca_Class::resolveRelated( 'Other_Related_Base_Sibling', '_Cousin', '_Sibling', 'Other_Related_Other' )
 					)
 					
 					->assertThrowsException(
@@ -106,7 +106,7 @@ class RoccaTest_Class extends Rocca_UnitTest
 						'Exception',
 						function () {
 							// this should throw an exception
-							Rocca_Class::resolveRelated( 'Related', '_Base', '', 'Related_Bogus' );
+							Rocca_Class::resolveRelated( 'Other_Related', '_Base', '', 'Other_Related_Bogus' );
 						}
 					)
 				

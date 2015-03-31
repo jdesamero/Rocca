@@ -11,35 +11,60 @@ class RoccaTest_Autoload extends Rocca_UnitTest
 		
 		Rocca_Autoload::getInstance()
 			->registerPath( sprintf( '%s/test_files/library', dirname( dirname( __FILE__ ) ) ) )
-			->registerNamespace( 'LoadMe' )
+			->registerNamespace( 'Other' )
 		;
 		
 		
+		$oThis = $this;
+		
 		$this
-			->assertStrictlyEqual( 'Root class loaded', TRUE, class_exists( 'LoadMe' ) )
-			->assertStrictlyEqual( 'Class loaded', TRUE, class_exists( 'LoadMe_Some' ) )
-			->assertStrictlyEqual( 'Class loaded 2', TRUE, class_exists( 'LoadMe_Some_Other' ) )
+			
+			->assertGroup( 'class_exists()', function() use ( $oThis ) {
+				
+				$oThis
+					->assertStrictlyEqual( 'Root class', TRUE, class_exists( 'Other' ) )
+					->assertStrictlyEqual( 'Level 1 class', TRUE, class_exists( 'Other_LoadMe' ) )
+					->assertStrictlyEqual( 'Level 2 class', TRUE, class_exists( 'Other_LoadMe_Some' ) )
+					->assertStrictlyEqual( 'Level 3 class', TRUE, class_exists( 'Other_LoadMe_Some_Other' ) )
+				;
+				
+			} )
+			
 		;
 		
 		
 		
 		//// instantiate auto-loaded classes
 		
-		$oRoot = new LoadMe();
-		$oSome = new LoadMe_Some();
-		$oSomeOther = new LoadMe_Some_Other();
+		$oRoot = new Other();
+		$oLevel1 = new Other_LoadMe();
+		$oLevel2 = new Other_LoadMe_Some();
+		$oLevel3 = new Other_LoadMe_Some_Other();
 		
 		
 		$this
+
+			->assertGroup( 'getMe()', function() use ( $oThis, $oRoot, $oLevel1, $oLevel2, $oLevel3 ) {
+				
+				$oThis
+					->assertStrictlyEqual( 'Root instance', 'This is the ROOT', $oRoot->getMe() )
+					->assertStrictlyEqual( 'Level 1 instance', 'This is LoadMe', $oLevel1->getMe() )
+					->assertStrictlyEqual( 'Level 2 instance', 'LoadMe Some', $oLevel2->getMe() )
+					->assertStrictlyEqual( 'Level 3 instance', 'LoadMe Other Some', $oLevel3->getMe() )
+				;
+				
+			} )
 			
-			->assertStrictlyEqual( 'Root instance get method', 'This is LoadMe', $oRoot->getMe() )
-			->assertInstanceOf( 'Instance of root class', 'LoadMe', $oRoot )
-			
-			->assertStrictlyEqual( 'Class instance get method', 'LoadMe Some', $oSome->getMe() )
-			->assertInstanceOf( 'Instance of class', 'LoadMe_Some', $oSome )
-			
-			->assertStrictlyEqual( 'Class instance 2 get method', 'LoadMe Other Some', $oSomeOther->getMe() )
-			->assertInstanceOf( 'Instance of class 2', 'LoadMe_Some_Other', $oSomeOther )
+			->assertGroup( 'Instance of', function() use ( $oThis, $oRoot, $oLevel1, $oLevel2, $oLevel3 ) {
+
+				$oThis
+					->assertInstanceOf( 'Root instance', 'Other', $oRoot )
+					->assertInstanceOf( 'Level 1 instance', 'Other_LoadMe', $oLevel1 )
+					->assertInstanceOf( 'Level 2 instance', 'Other_LoadMe_Some', $oLevel2 )
+					->assertInstanceOf( 'Level 3 instance', 'Other_LoadMe_Some_Other', $oLevel3 )
+				;
+				
+			} )
 			
 		;
 		

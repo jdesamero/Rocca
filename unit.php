@@ -18,6 +18,10 @@ Rocca_UnitTest::runAll( array(
 	
 	'show_errors_only' => FALSE,
 	
+	'run_start_callback' => function() {
+		echo "======== Starting Unit Tests =========================================================\n\n";
+	},
+	
 	'show_results_callback' => function( $sClass, $aResults ) {
 		
 		printf( "Running Test: %s\n\n", $sClass );
@@ -52,9 +56,12 @@ Rocca_UnitTest::runAll( array(
 	},
 	
 	'run_end_callback' => function( $bHasErrors ) {
+		
 		if ( !$bHasErrors ) {
-			echo 'There were no errors found!';
+			echo "There were no errors found!\n\n";
 		}
+		
+		echo "======== End of Unit Tests ===========================================================\n\n";
 	}
 	
 ) );

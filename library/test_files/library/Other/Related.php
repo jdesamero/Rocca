@@ -1,7 +1,7 @@
 <?php
 
 //
-class Related
+class Other_Related
 {
 	
 	

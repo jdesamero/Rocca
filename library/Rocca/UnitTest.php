@@ -26,13 +26,21 @@ class Rocca_UnitTest
 		// setup params
 		
 		$sPath = $aParams[ 'path' ] ?: dirname( dirname( __FILE__ ) ) ;
+		
 		$bShowErrorsOnly = isset( $aParams[ 'show_errors_only' ] ) ? $aParams[ 'show_errors_only' ] : TRUE ;
 		$sTestClassPrefix = $aParams[ 'test_class_prefix' ] ?: 'RoccaTest' ;
+		
+		$fRunStartCb = $aParams[ 'run_start_callback' ];
 		$fShowResultCb = $aParams[ 'show_results_callback' ];
 		$fRunEndCb = $aParams[ 'run_end_callback' ];
 		
 		
-		// do stuff
+		
+		//// do stuff
+		
+		// call before anything happens
+		if ( $fRunStartCb ) call_user_func( $fRunStartCb );
+		
 		
 		$sTestClassPath = sprintf( '%s/%s', $sPath, $sTestClassPrefix );
 		
@@ -75,9 +83,8 @@ class Rocca_UnitTest
 			
 		}
 		
-		if ( $fRunEndCb ) {
-			call_user_func( $fRunEndCb, $bHasErrors );
-		}
+		// call right at the end
+		if ( $fRunEndCb ) call_user_func( $fRunEndCb, $bHasErrors );
 	}
 	
 	
