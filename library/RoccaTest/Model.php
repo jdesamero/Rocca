@@ -10,8 +10,6 @@ class RoccaTest_Model extends Rocca_UnitTest
 		parent::run();
 		
 		
-		$oThis = $this;
-		
 		$oFriend = new RoccaTest_Fixtures_Friend( array(
 			'id' => 101,
 			'username' => 'johnny',
@@ -23,9 +21,9 @@ class RoccaTest_Model extends Rocca_UnitTest
 		
 		$this
 			
-			->assertGroup( 'get*()', function() use ( $oThis, $oFriend ) {
+			->assertGroup( 'get*()', function() use ( $oFriend ) {
 				
-				$oThis
+				$this
 					
 					->assertStrictlyEqual( 'int value', 101, $oFriend->getId() )
 					->assertStrictlyEqual( 'string value', 'John', $oFriend->getFirstName() )
@@ -48,9 +46,9 @@ class RoccaTest_Model extends Rocca_UnitTest
 			
 			} )
 			
-			->assertGroup( 'echo*()', function() use ( $oThis, $oFriend ) {
+			->assertGroup( 'echo*()', function() use ( $oFriend ) {
 				
-				$oThis
+				$this
 					
 					->assertStrictlyEqual( 'int value', '101', Rocca_String::fromOb( array( $oFriend, 'echoId' ) ) )
 					->assertStrictlyEqual( 'string value', 'John', Rocca_String::fromOb( array( $oFriend, 'echoFirstName' ) ) )
@@ -72,9 +70,9 @@ class RoccaTest_Model extends Rocca_UnitTest
 
 		$this
 			
-			->assertGroup( 'set*()', function() use ( $oThis, $oFriend ) {
+			->assertGroup( 'set*()', function() use ( $oFriend ) {
 				
-				$oThis
+				$this
 					->assertStrictlyEqual( 'int value', 5151, $oFriend->getId() )
 					->assertStrictlyEqual( 'string value', 'Matthews', $oFriend->getLastName() )
 					->assertStrictlyEqual( 'new value', 'Red', $oFriend->getColor() )

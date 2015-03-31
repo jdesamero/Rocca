@@ -15,13 +15,11 @@ class RoccaTest_Autoload extends Rocca_UnitTest
 		;
 		
 		
-		$oThis = $this;
-		
 		$this
 			
-			->assertGroup( 'class_exists()', function() use ( $oThis ) {
+			->assertGroup( 'class_exists()', function() {
 				
-				$oThis
+				$this
 					->assertStrictlyEqual( 'Root class', TRUE, class_exists( 'Other' ) )
 					->assertStrictlyEqual( 'Level 1 class', TRUE, class_exists( 'Other_LoadMe' ) )
 					->assertStrictlyEqual( 'Level 2 class', TRUE, class_exists( 'Other_LoadMe_Some' ) )
@@ -44,9 +42,9 @@ class RoccaTest_Autoload extends Rocca_UnitTest
 		
 		$this
 
-			->assertGroup( 'getMe()', function() use ( $oThis, $oRoot, $oLevel1, $oLevel2, $oLevel3 ) {
+			->assertGroup( 'getMe()', function() use ( $oRoot, $oLevel1, $oLevel2, $oLevel3 ) {
 				
-				$oThis
+				$this
 					->assertStrictlyEqual( 'Root instance', 'This is the ROOT', $oRoot->getMe() )
 					->assertStrictlyEqual( 'Level 1 instance', 'This is LoadMe', $oLevel1->getMe() )
 					->assertStrictlyEqual( 'Level 2 instance', 'LoadMe Some', $oLevel2->getMe() )
@@ -55,9 +53,9 @@ class RoccaTest_Autoload extends Rocca_UnitTest
 				
 			} )
 			
-			->assertGroup( 'Instance of', function() use ( $oThis, $oRoot, $oLevel1, $oLevel2, $oLevel3 ) {
+			->assertGroup( 'Instance of', function() use ( $oRoot, $oLevel1, $oLevel2, $oLevel3 ) {
 
-				$oThis
+				$this
 					->assertInstanceOf( 'Root instance', 'Other', $oRoot )
 					->assertInstanceOf( 'Level 1 instance', 'Other_LoadMe', $oLevel1 )
 					->assertInstanceOf( 'Level 2 instance', 'Other_LoadMe_Some', $oLevel2 )

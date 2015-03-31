@@ -9,15 +9,14 @@ class RoccaTest_String extends Rocca_UnitTest
 		
 		parent::run();
 		
-		$oThis = $this;
 		
 		$this
 
 			//// Rocca_String::fromOb
 			
-			->assertGroup( 'fromOb()', function() use ( $oThis ) {
+			->assertGroup( 'fromOb()', function() {
 				
-				$oThis
+				$this
 					
 					->assertStrictlyEqual(
 						'closure',
@@ -55,9 +54,9 @@ class RoccaTest_String extends Rocca_UnitTest
 			
 			//// Rocca_String::fromObArray
 			
-			->assertGroup( 'fromObArray()', function() use ( $oThis ) {
+			->assertGroup( 'fromObArray()', function() {
 				
-				$oThis
+				$this
 				
 					->assertStrictlyEqual(
 						'closure',

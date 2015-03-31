@@ -19,7 +19,7 @@ Rocca_UnitTest::runAll( array(
 	'show_errors_only' => FALSE,
 	
 	'run_start_callback' => function() {
-		echo "======== Starting Unit Tests =========================================================\n\n";
+		echo "================================= Starting Unit Tests =================================\n\n";
 	},
 	
 	'show_results_callback' => function( $sClass, $aResults ) {
@@ -41,14 +41,7 @@ Rocca_UnitTest::runAll( array(
 				$sMsg = '';
 			}
 			
-			// which test was run?
-			$sTest = $oResult->getKey();
-			
-			if ( count( $aGrouping = $oResult->getGrouping() ) > 0 ) {
-				$sTest = sprintf( '%s: %s', implode( ': ', $aGrouping ), $sTest );
-			}
-			
-			printf( "* %s!: %s%s\n", $sStatus, $sTest, $sMsg );
+			printf( "* %s!: %s%s\n", $sStatus, $oResult->getTitle(), $sMsg );
 		}
 		
 		echo "\n\n";
@@ -61,7 +54,7 @@ Rocca_UnitTest::runAll( array(
 			echo "There were no errors found!\n\n";
 		}
 		
-		echo "======== End of Unit Tests ===========================================================\n\n";
+		echo "================================== End of Unit Tests ==================================\n\n";
 	}
 	
 ) );

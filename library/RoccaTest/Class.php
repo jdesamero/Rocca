@@ -15,14 +15,11 @@ class RoccaTest_Class extends Rocca_UnitTest
 		;
 		
 		
-		$oThis = $this;
-		
-		
 		$this
 			
-			->assertGroup( 'resolveRelated()', function() use ( $oThis ) {
+			->assertGroup( 'resolveRelated()', function() {
 				
-				$oThis
+				$this
 					
 					//// add suffix to class name
 					

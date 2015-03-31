@@ -112,13 +112,11 @@ trait Rocca_Model_GetSet
 	//
 	public function modelFormattedGet( $mFormat, $aValues = array() ) {
 		
-		$oThis = $this;
-		
 		$oPlaceholder = Rocca_Utility_Placeholder::create( $mFormat );
 		
-		$fGetCallback = function ( $sKey ) use ( $oThis ) {
+		$fGetCallback = function ( $sKey ) {
 			$sGetMethod = sprintf( 'get%s', Rocca_Inflector::camelize( $sKey ) );
-			return $oThis->$sGetMethod();
+			return $this->$sGetMethod();
 		};
 		
 		return $oPlaceholder->getPopulated( $aValues, $fGetCallback, $fGetCallback );

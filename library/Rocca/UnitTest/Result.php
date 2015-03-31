@@ -48,6 +48,22 @@ class Rocca_UnitTest_Result extends Rocca_Model
 	}
 	
 	
+	// the title of the test that was run
+	public function getTitle() {
+		
+		// which test was run?
+		$sTitle = $this->getKey();
+		
+		if ( count( $aGrouping = $this->getGrouping() ) > 0 ) {
+			$sTitle = sprintf( '%s: %s', implode( ': ', $aGrouping ), $sTitle );
+		}
+		
+		return $sTitle;
+	}
+	
+	
+	
 }
+
 
 

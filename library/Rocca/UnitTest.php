@@ -115,9 +115,8 @@ class Rocca_UnitTest
 			foreach ( $this->_aResults as $oResult ) {
 				
 				if ( $oResult->getFailed() ) {
-					$aRes[ $sKey ] = $oResult;
+					$aRes[] = $oResult;
 				}
-				
 			}
 			
 			return $aRes;
