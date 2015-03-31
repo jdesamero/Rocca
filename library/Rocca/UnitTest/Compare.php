@@ -30,21 +30,17 @@ class Rocca_UnitTest_Compare
 	public function getResult() {
 		
 		if ( !$this->test() ) {
-			return $this->getResultMessage();
+			
+			// return formatted values for display, should all be strings
+			return array(
+				'message' => $this->getFailMessage(),
+				'expected_value' => $this->getExpectedFormatted(),
+				'result_value' => $this->getResultFormatted()
+			);
+			
 		}
 		
 		return TRUE;
-	}
-	
-	// get meaningful message regarding error
-	public function getResultMessage() {
-		
-		return sprintf(
-			'%s Expected: %s, result: %s.',
-			$this->getFailMessage(),
-			$this->getExpectedFormatted(),
-			$this->getResultFormatted()
-		);
 	}
 	
 	
@@ -73,6 +69,19 @@ class Rocca_UnitTest_Compare
 	
 	
 	
+	//// hook'ables and override'ables
+	
+	//
+	public function formatTestValue( $mCompare, $mValue ) {
+
+		if ( is_callable( $mCompare ) ) {
+			return call_user_func( $mCompare, $mValue );
+		}
+		
+		return $mCompare;
+	}
+	
+	
 	//// helpers
 	
 	//
@@ -97,7 +106,7 @@ class Rocca_UnitTest_Compare
 			} elseif ( is_bool( $mValue ) ) {
 				$sFmtValue = $mValue ? 'TRUE' : 'FALSE' ;
 			} elseif ( is_null( $mValue ) ) {
-				$mValue = 'NULL';
+				$sFmtValue = 'NULL';
 			}
 			
 			$sRes = sprintf( '%s (%s)', $sFmtValue, gettype( $mValue ) );					

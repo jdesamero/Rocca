@@ -29,6 +29,15 @@ class RoccaTest_Model extends Rocca_UnitTest
 			->assertStrictlyEqual( 'Get formatted value 2', 'Doe, John', $oFriend->modelFormattedGet( '##last_name##, ##first_name##' ) )
 			->assertStrictlyEqual( 'Get formatted value 3', 'johnny', $oFriend->modelFormattedGet( 'username' ) )
 			
+			->assertThrowsException(
+				'Get non-existent entity',
+				'Exception',
+				function() use ( $oFriend ) {
+					// this should throw an exception
+					$oFriend->getSomeBogus();
+				}
+			)
+			
 			->assertStrictlyEqual( 'Echo int value', '101', Rocca_String::fromOb( array( $oFriend, 'echoId' ) ) )
 			->assertStrictlyEqual( 'Echo string value', 'John', Rocca_String::fromOb( array( $oFriend, 'echoFirstName' ) ) )
 			->assertStrictlyEqual( 'Echo method value', 'John Doe', Rocca_String::fromOb( array( $oFriend, 'echoFullName' ) ) )

@@ -117,18 +117,17 @@ class Rocca_UnitTest
 	
 	//
 	public function assert( $sComparisonType, $sKey, $mValue, $mCompare ) {
-		
-		if ( is_callable( $mCompare ) ) {
-			$mTestValue = call_user_func( $mCompare, $mValue );
-		} else {
-			$mTestValue = $mCompare;
-		}
-		
+				
 		$sComparisonClass = sprintf( 'Rocca_UnitTest_Compare_%s', $sComparisonType );
 		
 		if ( is_subclass_of( $sComparisonClass, Rocca_UnitTest_Compare ) ) {
-			
+
 			$oCompare = Rocca_Singleton::getInstance( $sComparisonClass );
+			
+			// give compare opportunity to format test value,
+			// but usually $mTestValue === $mCompare
+			$mTestValue = $oCompare->formatTestValue( $mCompare, $mValue );
+			
 			$oCompare->setValues( $mValue, $mTestValue );
 			
 			$this->_aResults[ $sKey ] = $oCompare->getResult();

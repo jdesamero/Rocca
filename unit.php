@@ -32,7 +32,12 @@ Rocca_UnitTest::runAll( array(
 			} else {
 				
 				$sStatus = 'Failed';
-				$sMsg = sprintf( ' --> %s', $mResult );
+				$sMsg = sprintf(
+					' --> %s Expected: %s, result: %s.',
+					$mResult[ 'message' ],
+					$mResult[ 'expected_value' ],
+					$mResult[ 'result_value' ]
+				);
 			}
 			
 			printf( "* %s! %s%s\n", $sStatus, $sKey, $sMsg );

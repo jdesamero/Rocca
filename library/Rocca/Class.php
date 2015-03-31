@@ -1,10 +1,11 @@
 <?php
 
+//
 class Rocca_Class
 {
 	
 	//
-	public function resolveRelated( $sInstanceClass, $sAddSuffix, $sRemoveSuffix, $sDefaultClass ) {
+	public function resolveRelated( $sInstanceClass, $sAddSuffix, $sRemoveSuffix = '', $sDefaultClass = '' ) {
 		
 		// a "hard-coded" default class was provided, so skip resolution process
 		if ( $sDefaultClass ) {
@@ -16,29 +17,33 @@ class Rocca_Class
 			}
 		}
 		
-		// append suffix, if provided, to instance class and see if there is a match
-		if ( $sAddSuffix ) {
-			
-			$sResolveClass = sprintf( '%s%s', $sInstanceClass, $sAddSuffix );
-			
-			if ( class_exists( $sResolveClass ) ) {
-				return $sResolveClass;
-			}
-		}
 		
 		// remove suffix, if provided, to instance class and see if there is a match
 		if ( $sRemoveSuffix ) {
 			
 			if ( FALSE !== ( $iPos = strrpos( $sInstanceClass, $sRemoveSuffix ) ) ) {
 				
-				$sResolveClass = substr( $sInstanceClass, 0, strlen( $sRemoveSuffix ) + 1 );
+				$sResolveClass = substr( $sInstanceClass, 0, strlen( $sInstanceClass ) - strlen( $sRemoveSuffix ) );
 				
-				if ( class_exists( $sResolveClass ) ) {
+				// is $sAddSuffix was provided, then don't resolve just yet
+				if ( !$sAddSuffix && class_exists( $sResolveClass ) ) {
 					return $sResolveClass;
 				}
 			}
 			
 		}
+		
+		
+		// append suffix, if provided, to instance class and see if there is a match
+		if ( $sAddSuffix ) {
+			
+			$sResolveClass = sprintf( '%s%s', $sResolveClass ?: $sInstanceClass, $sAddSuffix );
+			
+			if ( class_exists( $sResolveClass ) ) {
+				return $sResolveClass;
+			}
+		}
+		
 		
 		// no match
 		return NULL;
