@@ -33,7 +33,7 @@ class Rocca_UnitTest_Compare
 			
 			// return formatted values for display, should all be strings
 			return array(
-				'message' => $this->getFailMessage(),
+				'fail_message' => $this->getFailMessage(),
 				'expected_value' => $this->getExpectedFormatted(),
 				'result_value' => $this->getResultFormatted()
 			);

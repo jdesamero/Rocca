@@ -10,8 +10,8 @@ class Rocca_UnitTest
 	
 	protected $_aCallables = array( 'UnitTest' );
 	
-	protected $_aResults = array();
-	
+	protected $_aResults = NULL;		// should be instance of Rocca_UnitTest_Result_Collection
+	protected $_aGrouping = array();
 	
 	
 	
@@ -53,6 +53,7 @@ class Rocca_UnitTest
 			if ( is_subclass_of( $sClass, Rocca_UnitTest ) ) {
 				
 				$aResults = Rocca_Singleton::getInstance( $sClass )
+					->init()
 					->run()
 					->getResults( $bShowErrorsOnly )
 				;
@@ -63,11 +64,11 @@ class Rocca_UnitTest
 						call_user_func( $fShowResultCb, $sClass, $aResults );
 					}
 					
-					foreach ( $aResults as $sKey => $mResult ) {
-						if ( TRUE !== $mResult ) {
-							$bHasErrors = TRUE;
-						}
+					
+					foreach ( $aResults as $oResult ) {
+						if ( $oResult->getFailed() ) $bHasErrors = TRUE;
 					}
+					
 				}
 				
 			}
@@ -77,10 +78,21 @@ class Rocca_UnitTest
 		if ( $fRunEndCb ) {
 			call_user_func( $fRunEndCb, $bHasErrors );
 		}
-				
 	}
 	
 	
+	
+	
+	//// initialize
+	
+	//
+	public function doInit() {
+		
+		Rocca_Singleton::doInit();
+		
+		$this->_aResults = new Rocca_UnitTest_Result_Collection();
+		
+	}
 	
 	
 	//// instance methods
@@ -93,10 +105,10 @@ class Rocca_UnitTest
 			
 			$aRes = array();
 			
-			foreach ( $this->_aResults as $sKey => $mResult ) {
+			foreach ( $this->_aResults as $oResult ) {
 				
-				if ( TRUE !== $mResult ) {
-					$aRes[ $sKey ] = $mResult;
+				if ( $oResult->getFailed() ) {
+					$aRes[ $sKey ] = $oResult;
 				}
 				
 			}
@@ -130,8 +142,12 @@ class Rocca_UnitTest
 			
 			$oCompare->setValues( $mValue, $mTestValue );
 			
-			$this->_aResults[ $sKey ] = $oCompare->getResult();
-		
+			$this->_aResults->add( new Rocca_UnitTest_Result(
+				$sKey,
+				$oCompare->getResult(),
+				$this->_aGrouping
+			) );
+			
 		} else {
 			throw new Exception( sprintf( 'Invalid comparison class "%s" specified.', $sComparisonClass ) );
 		}
@@ -139,6 +155,18 @@ class Rocca_UnitTest
 		return $this;
 	}
 	
+	
+	// assert a bunch together
+	public function assertGroup( $sGroupKey, $fAssertCb ) {
+		
+		// $fAssertCb callback should, in itself, call a bunch of "regular" asserts
+		
+		array_push( $this->_aGrouping, $sGroupKey );
+		call_user_func( $fAssertCb );
+		array_pop( $this->_aGrouping );
+				
+		return $this;
+	}
 	
 	
 	

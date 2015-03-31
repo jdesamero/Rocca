@@ -22,25 +22,29 @@ Rocca_UnitTest::runAll( array(
 		
 		printf( "Running Test: %s\n\n", $sClass );
 		
-		foreach ( $aResults as $sKey => $mResult ) {
+		foreach ( $aResults as $oResult ) {
 			
-			if ( TRUE === $mResult ) {
-				
-				$sStatus = 'Success';
-				$sMsg = '';
+			if ( $oResult->getFailed() ) {
+
+				$sStatus = 'Failed';
+				$sMsg = $oResult->modelFormattedGet(
+					' --> ##FailMessage## Expected: ##ExpectedValue##, result: ##ResultValue##.'
+				);
 				
 			} else {
 				
-				$sStatus = 'Failed';
-				$sMsg = sprintf(
-					' --> %s Expected: %s, result: %s.',
-					$mResult[ 'message' ],
-					$mResult[ 'expected_value' ],
-					$mResult[ 'result_value' ]
-				);
+				$sStatus = 'Success';
+				$sMsg = '';
 			}
 			
-			printf( "* %s! %s%s\n", $sStatus, $sKey, $sMsg );
+			// which test was run?
+			$sTest = $oResult->getKey();
+			
+			if ( count( $aGrouping = $oResult->getGrouping() ) > 0 ) {
+				$sTest = sprintf( '%s: %s', implode( ': ', $aGrouping ), $sTest );
+			}
+			
+			printf( "* %s!: %s%s\n", $sStatus, $sTest, $sMsg );
 		}
 		
 		echo "\n\n";
