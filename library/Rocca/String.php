@@ -34,6 +34,49 @@ class Rocca_String
 	
 	
 	
+	/* break a large blob of text into chunks
+	 * $sBreakPoints are allowed characters where breaks can take place
+	 */
+	public function chunk( $sText, $iChunkLen = 255, $sBreakPoints = " .,!?:;\n\r\t" ) {
+		
+		if ( strlen( $sText ) <= $iChunkLen ) {
+			return $sText;
+		}
+		
+		
+		//// break it down
+		
+		$aBroken = array();
+		
+		while ( strlen( $sText ) > $iChunkLen ) {
+			
+			$sPart = substr( $sText, 0, $iChunkLen );
+			
+			$iLen = strlen( $sPart );
+			
+			while ( TRUE ) {
+				$sLastChar = $sPart[ $iLen - 1 ];
+				if ( FALSE === strpos( $sBreakPoints, $sLastChar ) ) {
+					$iLen--;
+				} else {
+					break;
+				}
+			}
+			
+			$sPart = substr( $sText, 0, $iLen );
+			
+			$aBroken[] = $sPart;
+			$sText = substr( $sText, $iLen );
+			
+		}
+		
+		// add last part
+		$aBroken[] = $sText;
+		
+		return $aBroken;
+	}
+	
+	
 	
 }
 

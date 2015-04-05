@@ -9,10 +9,8 @@ class RoccaTest_Class extends Rocca_UnitTest
 		
 		parent::run();
 		
-		Rocca_Autoload::getInstance()
-			->registerPath( sprintf( '%s/test_files/library', dirname( dirname( __FILE__ ) ) ) )
-			->registerNamespace( 'Other' )
-		;
+		
+		// IMPORTANT!!! Depends of RoccaTest_Autoload
 		
 		
 		$this

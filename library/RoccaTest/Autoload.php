@@ -9,6 +9,10 @@ class RoccaTest_Autoload extends Rocca_UnitTest
 		
 		parent::run();
 		
+		
+		/* IMPORTANT!!! This unit test must be guaranteed to run before others, as they may depend
+		 * on the "Other" namespace
+		 */
 		Rocca_Autoload::getInstance()
 			->registerPath( sprintf( '%s/test_files/library', dirname( dirname( __FILE__ ) ) ) )
 			->registerNamespace( 'Other' )

@@ -27,19 +27,31 @@ class Rocca_UnitTest_Compare
 	
 	
 	//
-	public function getResult() {
-		
-		if ( !$this->test() ) {
+	public function getResult( $mValue, $mCompare ) {
+
+		// give compare opportunity to format test value,
+		// but usually $mTestValue === $mCompare
+		try {
 			
-			// return formatted values for display, should all be strings
-			return array(
-				'fail_message' => $this->getFailMessage(),
-				'expected_value' => $this->getExpectedFormatted(),
-				'result_value' => $this->getResultFormatted()
-			);
+			$mTestValue = $this->formatTestValue( $mCompare, $mValue );
+			$this->setValues( $mValue, $mTestValue );
+
+			if ( !$this->test() ) {
+				
+				// return formatted values for display, should all be strings
+				return array(
+					'fail_message' => $this->getFailMessage(),
+					'expected_value' => $this->getExpectedFormatted(),
+					'result_value' => $this->getResultFormatted()
+				);
+				
+			}
 			
+		} catch ( Rocca_UnitTest_Exception $e ) {
+			
+			return $this->handleException( $e );
 		}
-		
+				
 		return TRUE;
 	}
 	
@@ -65,6 +77,24 @@ class Rocca_UnitTest_Compare
 	//
 	public function getResultFormatted() {
 		return sprintf( '"%s"', $this->_mTestValue );
+	}
+	
+	// failure of a different sort
+	public function handleException( $e ) {
+		
+		if ( $e instanceof Rocca_UnitTest_Exception ) {
+			
+			// return formatted values for display, should all be strings
+			return array(
+				'fail_message' => sprintf( 'Exception thrown: %s', $e->getMessageFormatted() ),
+				'expected_value' => $e->getExpectedFormatted(),
+				'result_value' => $e->getResultFormatted()
+			);
+			
+		}
+		
+		// not sure what to do with you
+		throw $e;
 	}
 	
 	

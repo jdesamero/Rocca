@@ -10,6 +10,9 @@ class RoccaTest_UnitTest extends Rocca_UnitTest
 		parent::run();
 		
 		
+		// IMPORTANT!!! Depends of RoccaTest_Autoload
+		
+		
 		$oUnitTest = Other_UnitTest::getInstance()
 			->init()
 			->run()
@@ -64,53 +67,16 @@ class RoccaTest_UnitTest extends Rocca_UnitTest
 		$this
 			
 			->assertGroup( 'All results', function() use ( $oUnitTest, $aExpectedResults ) {
-
-				// get all results
 				
-				$aResults = $oUnitTest->getResults();
-				
-				foreach ( $aResults as $i => $oResult ) {
-					
-					$sMsg = sprintf( '%s: ', $oResult->getTitle() );
-					
-					if ( $oResult->getFailed() ) {
-						
-						$sMsg .= $oResult->modelFormattedGet(
-							'Fail Message: ##FailMessage##, expected: ##ExpectedValue##, result: ##ResultValue##.'
-						);
-						
-					} else {
-						$sMsg .= 'Success!';
-					}
-					
-					list( $sKey, $sExpectedValue ) = $aExpectedResults[ $i ];
-					
-					$this->assertStrictlyEqual( $sKey, $sExpectedValue, $sMsg );
-					
-				}
-				
+				// test all results
+				$this->assertUnitTestResults( $aExpectedResults, $oUnitTest->getResults() );
+								
 			} )
 			
 			->assertGroup( 'Failed only results', function() use ( $oUnitTest, $aExpectedErrorOnly ) {
-
-				// failed only
-		
-				$aResults = $oUnitTest->getResults( TRUE );
 				
-				foreach ( $aResults as $i => $oResult ) {
-					
-					$sMsg = sprintf(
-						'%s: %s',
-						$oResult->getTitle(),
-						$oResult->modelFormattedGet(
-							'Fail Message: ##FailMessage##, expected: ##ExpectedValue##, result: ##ResultValue##.'
-						)
-					);
-					
-					list( $sKey, $sExpectedValue ) = $aExpectedErrorOnly[ $i ];
-					
-					$this->assertStrictlyEqual( $sKey, $sExpectedValue, $sMsg );
-				}
+				// failed only
+				$this->assertUnitTestResults( $aExpectedErrorOnly, $oUnitTest->getResults( TRUE ) );
 				
 			} )
 			

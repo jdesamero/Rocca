@@ -141,16 +141,10 @@ class Rocca_UnitTest
 		if ( is_subclass_of( $sComparisonClass, Rocca_UnitTest_Compare ) ) {
 
 			$oCompare = Rocca_Singleton::getInstance( $sComparisonClass );
-			
-			// give compare opportunity to format test value,
-			// but usually $mTestValue === $mCompare
-			$mTestValue = $oCompare->formatTestValue( $mCompare, $mValue );
-			
-			$oCompare->setValues( $mValue, $mTestValue );
-			
+						
 			$this->_aResults->add( new Rocca_UnitTest_Result(
 				$sKey,
-				$oCompare->getResult(),
+				$oCompare->getResult( $mValue, $mCompare ),
 				$this->_aGrouping
 			) );
 			
@@ -205,7 +199,50 @@ class Rocca_UnitTest
 	
 	
 	
-
+	//// helpers
+	
+	// format unit test results as plain text for easier comparison
+	public function getResultsAsText( $aResults ) {
+		
+		$aResFmt = array();
+		
+		foreach ( $aResults as $i => $oResult ) {
+			
+			$sMsg = sprintf( '%s: ', $oResult->getTitle() );
+			
+			if ( $oResult->getFailed() ) {
+				
+				$sMsg .= $oResult->modelFormattedGet(
+					'Fail Message: ##FailMessage##, expected: ##ExpectedValue##, result: ##ResultValue##.'
+				);
+				
+			} else {
+				$sMsg .= 'Success!';
+			}
+			
+			$aResFmt[] = $sMsg;
+		}
+		
+		return $aResFmt;
+	}
+	
+	
+	// macro-like
+	public function assertUnitTestResults( $aExpectedResults, $aUnitTestResults ) {
+		
+		$aResults = $this->getResultsAsText( $aUnitTestResults );
+		
+		foreach ( $aResults as $i => $sMsg ) {
+			
+			list( $sKey, $sExpectedValue ) = $aExpectedResults[ $i ];
+			
+			$this->assertStrictlyEqual( $sKey, $sExpectedValue, $sMsg );
+		}
+		
+	}
+	
+	
+	
 }
 
 

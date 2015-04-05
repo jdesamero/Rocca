@@ -90,6 +90,33 @@ class RoccaTest_String extends Rocca_UnitTest
 				
 			} )
 
+
+			//// Rocca_String::fromObArray
+			
+			->assertGroup( 'chunk()', function() {
+				
+				$sText = file_get_contents( sprintf(
+					'%s/test_files/text/lorem_ipsum.txt',
+					dirname( dirname( __FILE__ ) )
+				) );
+				
+				$aChunks = Rocca_String::chunk( $sText );
+				
+				$this
+					->assertType( 'chunked type', 'array', $aChunks )
+					->assertArrayCount( 'chunked count', 7, $aChunks )
+					->assertMd5Hash( 'chunked hash', 'd5cf6b9cf6e3651c19ffb2509f17050d', $aChunks[ 0 ] )
+					->assertMd5Hash( 'chunked hash 2', '93b1ce46549b48728d84da4d21dc73e0', $aChunks[ 3 ] )
+					->assertMd5Hash( 'chunked hash 3', '0045506f9ff3ee456878221746aa9a9c', $aChunks[ 6 ] )
+				;
+								
+				/* /
+				foreach ( $aChunks as $sChunk ) {
+					printf( "[%s] (%d) [%s]\n\n", $sChunk, strlen( $sChunk ), md5( $sChunk ) );
+				}
+				/* */
+				
+			} )
 			
 		;
 		
