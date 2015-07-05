@@ -47,11 +47,11 @@ class RoccaTest_UnitTest extends Rocca_UnitTest
 		];
 		
 		
-		$aExpectedErrorOnly = array(
+		$aExpectedErrorOnly = [
 			$aExpectedResults[ 1 ],
 			$aExpectedResults[ 3 ],
 			$aExpectedResults[ 5 ]
-		);
+		];
 		
 		
 		
