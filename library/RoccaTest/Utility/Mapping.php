@@ -10,11 +10,11 @@ class RoccaTest_Utility_Mapping extends Rocca_UnitTest
 		parent::run();
 		
 		
-		$oMapping = new Rocca_Utility_Mapping( array(
+		$oMapping = new Rocca_Utility_Mapping( [
 			'id:the_id|is_the_id',
 			'fn:first_name',
 			'ln:last_name|surname|family_name'
-		) );
+		] );
 		
 		
 		

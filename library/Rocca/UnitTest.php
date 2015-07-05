@@ -8,10 +8,10 @@ class Rocca_UnitTest
 	use Rocca_HandleCall;
 	
 	
-	protected $_aCallables = array( 'UnitTest' );
+	protected $_aCallables = [ 'UnitTest' ];
 	
 	protected $_aResults = NULL;		// should be instance of Rocca_UnitTest_Result_Collection
-	protected $_aGrouping = array();
+	protected $_aGrouping = [];
 	
 	
 	
@@ -21,7 +21,7 @@ class Rocca_UnitTest
 	//// static methods
 	
 	//
-	public function runAll( $aParams = array() ) {
+	public function runAll( $aParams = [] ) {
 		
 		// setup params
 		
@@ -110,7 +110,7 @@ class Rocca_UnitTest
 		// only show errors
 		if ( $bErrorsOnly ) {
 			
-			$aRes = array();
+			$aRes = [];
 			
 			foreach ( $this->_aResults as $oResult ) {
 				
@@ -178,7 +178,7 @@ class Rocca_UnitTest
 		$aHandler = FALSE;
 		
 		if ( 0 === strpos( $sMethod, 'assert' ) ) {
-			$aHandler = array( 'assert', substr( $sMethod, 6 ) );
+			$aHandler = [ 'assert', substr( $sMethod, 6 ) ];
 		}
 		
 		return $aHandler;
@@ -192,7 +192,7 @@ class Rocca_UnitTest
 		array_unshift( $aArgs, $sProp );
 		
 		if ( 'assert' == $sOp ) {
-			return call_user_func_array( array( $this, 'assert' ), $aArgs );
+			return call_user_func_array( [ $this, 'assert' ], $aArgs );
 		}
 		
 	}
@@ -204,7 +204,7 @@ class Rocca_UnitTest
 	// format unit test results as plain text for easier comparison
 	public function getResultsAsText( $aResults ) {
 		
-		$aResFmt = array();
+		$aResFmt = [];
 		
 		foreach ( $aResults as $i => $oResult ) {
 			

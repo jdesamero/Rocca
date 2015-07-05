@@ -4,7 +4,7 @@
 trait Rocca_Plugin_Assign
 {
 	
-	protected $_aPlugins = array();
+	protected $_aPlugins = [];
 	
 	//
 	public function addPlugin( $sPluginClass ) {

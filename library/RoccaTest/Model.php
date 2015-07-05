@@ -10,13 +10,13 @@ class RoccaTest_Model extends Rocca_UnitTest
 		parent::run();
 		
 		
-		$oFriend = new RoccaTest_Fixtures_Friend( array(
+		$oFriend = new RoccaTest_Fixtures_Friend( [
 			'id' => 101,
 			'username' => 'johnny',
 			'first_name' => 'John',
 			'last_name' => 'Doe',
 			'is_friend' => TRUE
-		) );
+		] );
 		
 		
 		$this
@@ -50,9 +50,9 @@ class RoccaTest_Model extends Rocca_UnitTest
 				
 				$this
 					
-					->assertStrictlyEqual( 'int value', '101', Rocca_String::fromOb( array( $oFriend, 'echoId' ) ) )
-					->assertStrictlyEqual( 'string value', 'John', Rocca_String::fromOb( array( $oFriend, 'echoFirstName' ) ) )
-					->assertStrictlyEqual( 'method value', 'John Doe', Rocca_String::fromOb( array( $oFriend, 'echoFullName' ) ) )
+					->assertStrictlyEqual( 'int value', '101', Rocca_String::fromOb( [ $oFriend, 'echoId' ] ) )
+					->assertStrictlyEqual( 'string value', 'John', Rocca_String::fromOb( [ $oFriend, 'echoFirstName' ] ) )
+					->assertStrictlyEqual( 'method value', 'John Doe', Rocca_String::fromOb( [ $oFriend, 'echoFullName' ] ) )
 					
 				;
 				

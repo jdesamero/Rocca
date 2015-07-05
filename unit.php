@@ -14,7 +14,7 @@ Rocca_Autoload::getInstance()
 ;
 
 
-Rocca_UnitTest::runAll( array(
+Rocca_UnitTest::runAll( [
 	
 	'show_errors_only' => FALSE,
 	
@@ -57,7 +57,7 @@ Rocca_UnitTest::runAll( array(
 		echo "================================== End of Unit Tests ==================================\n\n";
 	}
 	
-) );
+] );
 
 
 

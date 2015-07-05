@@ -19,24 +19,20 @@ class RoccaTest_UnitTest_Compare_ArrayCount extends Rocca_UnitTest
 		;
 		
 		
-		$aExpectedResults = array(
-			array(
-				'Empty',
+		$aExpectedResults = [
+			[	'Empty',
 				'Empty: Success!'
-			),
-			array(
-				'Plain vanilla array',
+			],
+			[	'Plain vanilla array',
 				'Plain vanilla array: Success!'
-			),
-			array(
-				'Bad value',
+			],
+			[	'Bad value',
 				'Bad value: Fail Message: Exception thrown: Bad type given for count(), expected: "array or Countable", result: "string".'
-			),
-			array(
-				'Bad value 2',
+			],
+			[	'Bad value 2',
 				'Bad value 2: Fail Message: Exception thrown: Bad type given for count(), expected: "array or Countable", result: "object (stdClass)".'
-			)
-		);
+			]
+		];
 		
 		
 		

@@ -4,17 +4,17 @@
 class RoccaTest_Fixtures_Friend extends Rocca_Model
 {
 	
-	protected $_aModelPropMapping = array(
+	protected $_aModelPropMapping = [
 		'username:login',
 		'id:friend_id|the_friend_id'
-	);
+	];
 	
-	protected $_aModelDefaultValues = array(
+	protected $_aModelDefaultValues = [
 		'id' => NULL,
 		'username' => NULL,
 		'first_name' => NULL,
-		'last_name' => NULL		
-	);
+		'last_name' => NULL
+	];
 	
 	
 	//

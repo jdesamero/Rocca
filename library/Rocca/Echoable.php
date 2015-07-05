@@ -5,12 +5,12 @@ trait Rocca_Echoable
 	
 	
 	//
-	public function echoValue( $sProp = NULL, $aArgs = array() ) {
+	public function echoValue( $sProp = NULL, $aArgs = [] ) {
 		
 		$sMethod = sprintf( 'get%s', Rocca_Inflector::camelize( $sProp ) );
 		
 		if ( method_exists( $this, $sMethod ) ) {
-			echo call_user_func_array( array( $this, $sMethod ), $aArgs );
+			echo call_user_func_array( [ $this, $sMethod ], $aArgs );
 		}
 		
 		if ( method_exists( $this, 'modelRawGet' ) ) {
@@ -22,12 +22,12 @@ trait Rocca_Echoable
 	
 	
 	//
-	public function echoGetValue( $sProp = NULL, $aArgs = array() ) {
+	public function echoGetValue( $sProp = NULL, $aArgs = [] ) {
 		
 		$sMethod = sprintf( 'echo%s', Rocca_Inflector::camelize( $sProp ) );
 		
 		if ( method_exists( $this, $sMethod ) ) {
-			return Rocca_String::fromObArray( array( $this, $sMethod ), $aArgs );
+			return Rocca_String::fromObArray( [ $this, $sMethod ], $aArgs );
 		}
 		
 		return $this->modelRawGet( $sProp );
@@ -42,7 +42,7 @@ trait Rocca_Echoable
 		if ( 0 === strpos( $sMethod, 'echo' ) ) {
 
 			$sProp = Rocca_Inflector::underscore( substr( $sMethod, 4 ) );
-			$aHandler = array( 'echo', $sProp );
+			$aHandler = [ 'echo', $sProp ];
 			
 		} elseif ( 0 === strpos( $sMethod, 'get' ) ) {
 			
@@ -53,7 +53,7 @@ trait Rocca_Echoable
 			
 			if ( method_exists( $this, $sMethod ) ) {
 				$sProp = Rocca_Inflector::underscore( $sSuffix );
-				$aHandler = array( 'get', $sProp );
+				$aHandler = [ 'get', $sProp ];
 			}
 			
 		}

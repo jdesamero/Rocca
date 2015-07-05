@@ -9,7 +9,7 @@ class Rocca_Collection
 	use Rocca_HandleCall;
 	
 	
-	protected $_aCallables = array( 'Collection' );
+	protected $_aCallables = [ 'Collection' ];
 	
 	protected $_sInstanceClass = NULL;
 	protected $_sModelClass = NULL;
@@ -54,14 +54,10 @@ class Rocca_Collection
 		$oPlaceholder = Rocca_Utility_Placeholder::create( $mFormat );
 		
 		// assemble
-		$aRes = array();
+		$aRes = [];
 		
 		foreach ( $this as $i => $oModel ) {
-			
-			$aRes[] = $oModel->modelFormattedGet(
-				$oPlaceholder,
-				array( '__idx' => $i )
-			);			
+			$aRes[] = $oModel->modelFormattedGet( $oPlaceholder, [ '__idx' => $i ] );
 		}
 		
 		return $aRes;
@@ -85,12 +81,12 @@ class Rocca_Collection
 		if ( 0 === strpos( $sMethod, 'pluck' ) ) {
 			
 			$sProp = Rocca_Inflector::underscore( substr( $sMethod, 5 ) );
-			$aHandler = array( 'pluck', $sProp );
+			$aHandler = [ 'pluck', $sProp ];
 			
 		} elseif ( 0 === strpos( $sMethod, 'implode' ) ) {
 			
 			$sProp = Rocca_Inflector::underscore( substr( $sMethod, 7 ) );
-			$aHandler = array( 'implode', $sProp );
+			$aHandler = [ 'implode', $sProp ];
 		}
 		
 		return $aHandler;
@@ -105,11 +101,11 @@ class Rocca_Collection
 		
 		if ( 'pluck' == $sOp ) {
 			
-			return call_user_func_array( array( $this, 'pluck' ), $aArgs );
+			return call_user_func_array( [ $this, 'pluck' ], $aArgs );
 			
 		} elseif ( 'implode' == $sOp ) {
 			
-			return call_user_func_array( array( $this, 'implode' ), $aArgs );
+			return call_user_func_array( [ $this, 'implode' ], $aArgs );
 		}
 		
 	}

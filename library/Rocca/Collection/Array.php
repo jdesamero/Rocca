@@ -4,7 +4,7 @@
 trait Rocca_Collection_Array
 {
 	
-	protected $_aCollection = array();
+	protected $_aCollection = [];
 	protected $_iPos = 0;	
 	
 	
@@ -14,7 +14,7 @@ trait Rocca_Collection_Array
 	//
 	public function add( $mMembers ) {
 		
-		if ( is_array( $mMembers ) ) {
+		if ( Rocca_Array::hasNumericIndex( $mMembers ) ) {
 			
 			foreach ( $mMembers as $mMember ) {
 				$this->_aCollection[] = $this->formatMember( $mMember );		

@@ -8,7 +8,7 @@ trait Rocca_Singleton
 	
 	//// static properties and methods
 	
-	protected static $_aSingletonInstances = array();
+	protected static $_aSingletonInstances = [];
 	
 	//
 	public static function getInstance( $sInstanceClass = NULL ) {
@@ -51,7 +51,7 @@ trait Rocca_Singleton
 			
 			$aArgs = func_get_args();
 			
-			call_user_func_array( array( $this, 'doInit' ), $aArgs );
+			call_user_func_array( [ $this, 'doInit' ], $aArgs );
 			
 			$this->_bSingletonCalledInit = TRUE;
 		}
@@ -80,7 +80,7 @@ trait Rocca_Singleton
 		
 		$this->_bSingletonCalledInit = FALSE;
 		
-		call_user_func_array( array( $this, 'init' ), $aArgs );
+		call_user_func_array( [ $this, 'init' ], $aArgs );
 		
 		return $this;
 	}

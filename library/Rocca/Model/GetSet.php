@@ -9,8 +9,11 @@ trait Rocca_Model_GetSet
 	/* NOTE: These should be implemented by the class use'ing this
 	 *    protected $_sInstanceClass = NULL;
 	 *    protected $_bUseModelPropMapping = TRUE | FALSE;
-	 *    protected $_aModelDefaultValues = NULL | array();
+	 *    protected $_aModelDefaultValues = NULL | [];
 	 */
+	
+	
+	// TO DO: $this->_aModelDefaultValues may make more sense to be part of the $oClassHandler
 	
 	
 	//
@@ -35,6 +38,7 @@ trait Rocca_Model_GetSet
 		
 		if ( $this->_bUseModelPropMapping ) {
 			
+			// returns "the" class handler for Rocca_Model
 			$oClassHandler = Rocca_Class_Handler::factory( $this->_sInstanceClass );
 			
 			if (
@@ -110,7 +114,7 @@ trait Rocca_Model_GetSet
 	
 	
 	//
-	public function modelFormattedGet( $mFormat, $aValues = array() ) {
+	public function modelFormattedGet( $mFormat, $aValues = [] ) {
 		
 		$oPlaceholder = Rocca_Utility_Placeholder::create( $mFormat );
 		
@@ -135,7 +139,7 @@ trait Rocca_Model_GetSet
 			
 			$sProp = Rocca_Inflector::underscore( substr( $sMethod, 3 ) );
 						
-			$aHandler = array( 'set', $sProp );
+			$aHandler = [ 'set', $sProp ];
 			
 			
 		} elseif ( 0 === strpos( $sMethod, 'get' ) ) {
@@ -144,7 +148,7 @@ trait Rocca_Model_GetSet
 						
 			// only kicks in if property exists
 			if ( $this->modelHasProp( $sProp ) ) {
-				$aHandler = array( 'get', $sProp );			
+				$aHandler = [ 'get', $sProp ];			
 			}
 			
 		}

@@ -18,20 +18,17 @@ class RoccaTest_UnitTest_Compare_Md5Hash extends Rocca_UnitTest
 			->run()
 		;
 		
-		$aExpectedResults = array(
-			array(
-				'Empty value',
+		$aExpectedResults = [
+			[	'Empty value',
 				'Empty value: Success!'
-			),
-			array(
-				'Plain vanilla string',
+			],
+			[	'Plain vanilla string',
 				'Plain vanilla string: Success!'
-			),
-			array(
-				'Bad value type given',
+			],
+			[	'Bad value type given',
 				'Bad value type given: Fail Message: Exception thrown: Bad type given for md5(), expected: "null or scalar", result: "array".'
-			)
-		);
+			]
+		];
 		
 		
 		// test all results

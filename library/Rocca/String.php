@@ -22,7 +22,7 @@ class Rocca_String
 	
 	
 	// returns string
-	public function fromObArray( $fOutputCb, $aArgs = array() ) {
+	public function fromObArray( $fOutputCb, $aArgs = [] ) {
 		
 		ob_start();
 		call_user_func_array( $fOutputCb, $aArgs );
@@ -46,7 +46,7 @@ class Rocca_String
 		
 		//// break it down
 		
-		$aBroken = array();
+		$aBroken = [];
 		
 		while ( strlen( $sText ) > $iChunkLen ) {
 			

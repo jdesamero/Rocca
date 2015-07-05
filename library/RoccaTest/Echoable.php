@@ -21,25 +21,25 @@ class RoccaTest_Echoable extends Rocca_UnitTest
 			->assertStrictlyEqual(
 				'Get simple method',
 				'I am simple!',
-				Rocca_String::fromOb( array( $oSimple, 'echoMessage' ) )
+				Rocca_String::fromOb( [ $oSimple, 'echoMessage' ] )
 			)
 			
 			->assertStrictlyEqual(
 				'Get model prop',
 				'37231',
-				Rocca_String::fromOb( array( $oModel, 'echoId' ) )
+				Rocca_String::fromOb( [ $oModel, 'echoId' ] )
 			)
 			
 			->assertStrictlyEqual(
 				'Get model prop 2',
 				'Irving Ross',
-				Rocca_String::fromOb( array( $oModel, 'echoName' ) )
+				Rocca_String::fromOb( [ $oModel, 'echoName' ] )
 			)
 			
 			->assertStrictlyEqual(
 				'Get model method',
 				'I am Irving Ross!',
-				Rocca_String::fromOb( array( $oModel, 'echoMessage' ) )
+				Rocca_String::fromOb( [ $oModel, 'echoMessage' ] )
 			)
 			
 		;

@@ -10,8 +10,8 @@ class Rocca_Autoload
 	
 	use Rocca_Singleton;
 	
-	protected $_aNameSpaces = array( 'Rocca' );
-	protected $_aPaths = array();
+	protected $_aNameSpaces = [ 'Rocca' ];
+	protected $_aPaths = [];
 	
 	
 	//
@@ -54,7 +54,7 @@ class Rocca_Autoload
 		
 		$this->registerPath( dirname( dirname( __FILE__ ) ) );
 		
-		spl_autoload_register( array( $this, 'doAutoload' ) );
+		spl_autoload_register( [ $this, 'doAutoload' ] );
 	
 	}
 	

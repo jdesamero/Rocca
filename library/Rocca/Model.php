@@ -10,12 +10,12 @@ class Rocca_Model
 	use Rocca_HandleCall;
 	
 	
-	protected $_aCallables = array( 'Echo', 'Model' );
+	protected $_aCallables = [ 'Echo', 'Model' ];
 	
 	protected $_sInstanceClass = NULL;
 	protected $_sCollectionClass = NULL;
 	
-	protected $_aModelPropMapping = array();					// aliasing system
+	protected $_aModelPropMapping = [];						// aliasing system
 	protected $_bUseModelPropMapping = TRUE;
 	
 	
@@ -33,8 +33,15 @@ class Rocca_Model
 		);
 		
 		
-		// class handler init
-		$oClassHandler = Rocca_Class_Handler::factory(
+		/* TO DO: Model property mapping might work better as part of class handler as these values
+		 * are shared among the model instances for the particular class
+		 *
+		 * $this->_aModelPropMapping in theory may work as an instance override (rarely used)
+		 */
+		
+		
+		// class handler init, this can only happen once
+		Rocca_Class_Handler::factory(
 			$this->_sInstanceClass, sprintf( '%s_ClassHandler', __CLASS__ ), $this->_aModelPropMapping
 		);
 		

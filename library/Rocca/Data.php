@@ -4,7 +4,7 @@
 trait Rocca_Data
 {
 	
-	protected $_aData = array();
+	protected $_aData = [];
 	
 	//
 	public function dataSet() {

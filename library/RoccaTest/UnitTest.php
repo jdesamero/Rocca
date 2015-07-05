@@ -10,9 +10,10 @@ class RoccaTest_UnitTest extends Rocca_UnitTest
 		parent::run();
 		
 		
-		// IMPORTANT!!! Depends of RoccaTest_Autoload
-		
-		
+		/* * IMPORTANT!!! Depends of RoccaTest_Autoload, which loads the "Other" namespace
+		 * * Cannot have class RoccaTest_Fixtures_UnitTest as it will be run as part
+		 *   of the RoccaTest suite, so we declare Other_UnitTest itself
+		 */
 		$oUnitTest = Other_UnitTest::getInstance()
 			->init()
 			->run()
@@ -21,36 +22,29 @@ class RoccaTest_UnitTest extends Rocca_UnitTest
 		
 		//// expected results
 		
-		$aExpectedResults = array(
-			array(
-				'Match',
+		$aExpectedResults = [
+			[	'Match',
 				'Match: Success!'
-			),
-			array(
-				'No match',
+			],
+			[	'No match',
 				'No match: Fail Message: Values are not equal!, expected: "101", result: "999".'
-			),
-			array(
-				'Group match',
+			],
+			[	'Group match',
 				'Group assert: Match: Success!'
-			),
-			array(
-				'Group no match',
+			],
+			[	'Group no match',
 				'Group assert: No match: Fail Message: Values are not equal!, expected: "201", result: "999".'
-			),
-			array(
-				'Group level 2 match',
+			],
+			[	'Group level 2 match',
 				'Group assert: Level 2: Match: Success!'
-			),
-			array(
-				'Group level 2 no match',
+			],
+			[	'Group level 2 no match',
 				'Group assert: Level 2: No match: Fail Message: Values are not equal!, expected: "301", result: "999".'
-			),
-			array(
-				'Invalid comparison type',
+			],
+			[	'Invalid comparison type',
 				'Invalid comparison type: Success!'
-			)
-		);
+			]
+		];
 		
 		
 		$aExpectedErrorOnly = array(

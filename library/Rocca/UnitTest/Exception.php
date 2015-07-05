@@ -8,7 +8,7 @@ class Rocca_UnitTest_Exception extends Exception
 	use Rocca_HandleCall;
 	
 	
-	protected $_aCallables = array( 'Model' );
+	protected $_aCallables = [ 'Model' ];
 	
 	protected $_sBoilerPlate = '';
 	

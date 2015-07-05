@@ -5,23 +5,23 @@ class Rocca_UnitTest_Result extends Rocca_Model
 {
 	
 	
-	protected $_aModelDefaultValues = array(
+	protected $_aModelDefaultValues = [
 		'key' => NULL,
 		'fail_message' => NULL,
 		'expected_value' => NULL,
 		'result_value' => NULL,
-		'grouping' => array()
-	);
+		'grouping' => []
+	];
 	
 	
 	
 	//
-	public function __construct( $sKey, $mResult, $aGrouping = array() ) {
+	public function __construct( $sKey, $mResult, $aGrouping = [] ) {
 		
-		$aValues = array(
+		$aValues = [
 			'key' => $sKey,
 			'grouping' => $aGrouping
-		);
+		];
 		
 		if ( is_array( $mResult ) ) {
 			

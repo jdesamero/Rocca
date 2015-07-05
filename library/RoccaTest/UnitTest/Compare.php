@@ -10,7 +10,7 @@ class RoccaTest_UnitTest_Compare extends Rocca_UnitTest
 		parent::run();
 		
 		
-				
+		
 		return $this;
 	}
 

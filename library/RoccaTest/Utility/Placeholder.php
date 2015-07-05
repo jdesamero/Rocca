@@ -24,16 +24,16 @@ class RoccaTest_Utility_Placeholder extends Rocca_UnitTest
 			->assertStrictlyEqual(
 				'Get populated',
 				'I am Furdi, and I am 20 years old!',
-				$oPlaceholder->getPopulated( array(
+				$oPlaceholder->getPopulated( [
 					'FirstName' => 'Furdi',
 					'Years' => 20
-				) )
+				] )
 			)
 
 			->assertStrictlyEqual(
 				'Get populated callback',
 				'I am Timmy, and I am 5 years old!',
-				$oPlaceholder->getPopulated( array(), function( $sKey ) {
+				$oPlaceholder->getPopulated( [], function( $sKey ) {
 					
 					if ( 'FirstName' == $sKey ) {
 						return 'Timmy';
@@ -49,7 +49,7 @@ class RoccaTest_Utility_Placeholder extends Rocca_UnitTest
 			->assertStrictlyEqual(
 				'Get no placeholder callback',
 				'CHANGE EXPECTED',
-				$oNoChange->getPopulated( array(), NULL, function( $sFormat ) {
+				$oNoChange->getPopulated( [], NULL, function( $sFormat ) {
 					return substr( strtoupper( $sFormat ), 3 );
 				} )
 			)

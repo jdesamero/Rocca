@@ -39,11 +39,11 @@ class Rocca_UnitTest_Compare
 			if ( !$this->test() ) {
 				
 				// return formatted values for display, should all be strings
-				return array(
+				return [
 					'fail_message' => $this->getFailMessage(),
 					'expected_value' => $this->getExpectedFormatted(),
 					'result_value' => $this->getResultFormatted()
-				);
+				];
 				
 			}
 			
@@ -85,11 +85,11 @@ class Rocca_UnitTest_Compare
 		if ( $e instanceof Rocca_UnitTest_Exception ) {
 			
 			// return formatted values for display, should all be strings
-			return array(
+			return [
 				'fail_message' => sprintf( 'Exception thrown: %s', $e->getMessageFormatted() ),
 				'expected_value' => $e->getExpectedFormatted(),
 				'result_value' => $e->getResultFormatted()
-			);
+			];
 			
 		}
 		
