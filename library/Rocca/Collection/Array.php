@@ -81,7 +81,7 @@ trait Rocca_Collection_Array
 	
 	//
 	public function offsetGet( $iOffset ) {
-		return $this->_aCollection[ $this->_iPos ];
+		return $this->_aCollection[ $iOffset ];
 	}
 	
 	

@@ -1,7 +1,7 @@
 <?php
 
 //
-class RoccaTest_Model_Collection extends Rocca_UnitTest
+class RoccaTest_Collection extends Rocca_UnitTest
 {
 	
 	//
