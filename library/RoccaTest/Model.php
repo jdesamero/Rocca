@@ -10,7 +10,7 @@ class RoccaTest_Model extends Rocca_UnitTest
 		parent::run();
 		
 		
-		$oFriend = new RoccaTest_Fixtures_Friend( [
+		$oFriend = new RoccaTest_Fixtures_Model_Friend( [
 			'id' => 101,
 			'username' => 'johnny',
 			'first_name' => 'John',

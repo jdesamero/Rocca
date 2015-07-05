@@ -1,7 +1,7 @@
 <?php
 
 //
-class RoccaTest_Collection extends Rocca_UnitTest
+class RoccaTest_Model_Collection extends Rocca_UnitTest
 {
 	
 	//
@@ -10,7 +10,7 @@ class RoccaTest_Collection extends Rocca_UnitTest
 		parent::run();
 		
 		
-		$aFriends = new RoccaTest_Fixtures_Friend_Collection( [
+		$aFriends = new RoccaTest_Fixtures_Model_Friend_Collection( [
 			[	'id' => 101,
 				'username' => 'foo',
 				'first_name' => 'Reg',

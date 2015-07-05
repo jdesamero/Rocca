@@ -1,7 +1,7 @@
 <?php
 
 //
-class RoccaTest_Fixtures_Echo_Model
+class RoccaTest_Fixtures_Echoable_Model
 {
 	
 	use Rocca_Model_GetSet;

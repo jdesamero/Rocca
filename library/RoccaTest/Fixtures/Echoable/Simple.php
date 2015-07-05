@@ -1,7 +1,7 @@
 <?php
 
 //
-class RoccaTest_Fixtures_Echo_Simple
+class RoccaTest_Fixtures_Echoable_Simple
 {
 	
 	use Rocca_Echoable;

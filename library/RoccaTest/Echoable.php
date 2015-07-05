@@ -10,10 +10,10 @@ class RoccaTest_Echoable extends Rocca_UnitTest
 		parent::run();
 		
 		
-		$oSimple = new RoccaTest_Fixtures_Echo_Simple();
+		$oSimple = new RoccaTest_Fixtures_Echoable_Simple();
 		// $oSimple->echoMessage() should call'ed $oSimple->getMessage()
 
-		$oModel = new RoccaTest_Fixtures_Echo_Model();
+		$oModel = new RoccaTest_Fixtures_Echoable_Model();
 
 		
 		$this

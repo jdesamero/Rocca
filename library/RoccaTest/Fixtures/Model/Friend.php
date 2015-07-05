@@ -1,7 +1,7 @@
 <?php
 
 //
-class RoccaTest_Fixtures_Friend extends Rocca_Model
+class RoccaTest_Fixtures_Model_Friend extends Rocca_Model
 {
 	
 	protected $_aModelPropMapping = [

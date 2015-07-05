@@ -1,5 +1,6 @@
 <?php
 
+//
 class Rocca_Collection
 	implements Iterator, ArrayAccess, Countable
 {
@@ -12,52 +13,40 @@ class Rocca_Collection
 	protected $_aCallables = [ 'Collection' ];
 	
 	protected $_sInstanceClass = NULL;
-	protected $_sModelClass = NULL;
 	
 	
 	
 	//
 	public function __construct( $mMembers = NULL ) {
 		
-		
-		// resolve related classes
-		
+		// used potentially by "related" classes
 		$this->_sInstanceClass = get_class( $this );
 		
-		$this->_sModelClass = Rocca_Class::resolveRelated(
-			$this->_sInstanceClass, NULL, '_Collection', $this->_sModelClass
-		);
-		
+		// hook method, gives sub-class opportunity to set up before members are added
+		$this->collectionInit();
 		
 		// add members
-		
 		if ( $mMembers ) {
 			$this->add( $mMembers );
 		}
 		
 	}
 	
-	// implement member formatter
-	public function formatMember( $mMember ) {
-		
-		if ( is_array( $mMember ) ) {
-			return new $this->_sModelClass( $mMember );
-		}
-		
-		return $mMember;
-	}
+	
+	//
+	public function collectionInit() {}
 	
 	
 	// inspired by Backbone.js
-	public function pluck( $mFormat ) {
-		
-		$oPlaceholder = Rocca_Utility_Placeholder::create( $mFormat );
+	public function pluck( $sKey ) {
 		
 		// assemble
 		$aRes = [];
 		
-		foreach ( $this as $i => $oModel ) {
-			$aRes[] = $oModel->modelFormattedGet( $oPlaceholder, [ '__idx' => $i ] );
+		foreach ( $this as $i => $mRow ) {
+			if ( is_array( $mRow ) && array_key_exists( $sKey, $mRow ) ) {
+				$aRes[] = $mRow[ $sKey ];
+			}
 		}
 		
 		return $aRes;

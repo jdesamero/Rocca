@@ -68,9 +68,8 @@ trait Rocca_Singleton
 	
 	
 	// hook method to be implemented by sub-class
-	public function doInit() {
+	public function doInit() {}
 	
-	}
 	
 	
 	//

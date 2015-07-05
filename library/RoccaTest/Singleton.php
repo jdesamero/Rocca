@@ -10,12 +10,12 @@ class RoccaTest_Singleton extends Rocca_UnitTest
 		parent::run();
 		
 		
-		$oSingle = RoccaTest_Fixtures_Single::getInstance();
+		$oSingle = RoccaTest_Fixtures_Singleton_Simple::getInstance();
 		
 		$oSingle->setSome( 'This is me...' );
 		
-		$oSame = RoccaTest_Fixtures_Single::getInstance();
-		$oSameDyn = Rocca_Singleton::getInstance( 'RoccaTest_Fixtures_Single' );
+		$oSame = RoccaTest_Fixtures_Singleton_Simple::getInstance();
+		$oSameDyn = Rocca_Singleton::getInstance( 'RoccaTest_Fixtures_Singleton_Simple' );
 		
 		
 		$this

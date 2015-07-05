@@ -1,7 +1,7 @@
 <?php
 
 //
-class RoccaTest_Fixtures_Single
+class RoccaTest_Fixtures_Singleton_Simple
 {
 	
 	use Rocca_Singleton;
