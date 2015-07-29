@@ -8,7 +8,11 @@ class Rocca_Inflector
 	public static function camelize( $sLcAndUnscrWord ) {
 		
 		$sReplace = str_replace(
-			' ', '', ucwords( str_replace( '_', ' ', $sLcAndUnscrWord ) )
+			' ', '', ucwords( str_replace(
+				array( '_', '-', '.' ),
+				' ',
+				$sLcAndUnscrWord
+			) )
 		);		
 		
 		return $sReplace;
@@ -47,7 +51,9 @@ class Rocca_Inflector
 	public static function sanitize( $sString ) {
 		
 		$sRet = strtolower( $sString );
-		$sRet = preg_replace( '/[^a-z0-9-]/', '-', $sRet );
+		$sRet = preg_replace( '/[^a-z0-9-]+/', '-', $sRet );
+		
+		$sRet = trim( $sRet, '-' );
 		
 		return $sRet;
 	}

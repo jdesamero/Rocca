@@ -3,7 +3,7 @@
 trait Rocca_HandleCall
 {
 	
-	/* traits that are callable
+	/* method naming conventions that are callable
 	 * ex: $sCallable = 'Some'
 	 * expects these methods to be implemented:
 	 *		handle call method: handleSomeCall(), will we handle the call?
@@ -25,8 +25,8 @@ trait Rocca_HandleCall
 					
 					// Rocca_Debug::showLine( sprintf( '%s %s', $sHandleCallMethod, $sCallMethod ), __FILE__, __LINE__, __METHOD__ );
 					
-					if ( $aHandler = $this->$sHandleCallMethod( $sMethod, $aArgs ) ) {
-						return $this->$sCallMethod( $aHandler, $aArgs );
+					if ( $mHandler = $this->$sHandleCallMethod( $sMethod, $aArgs ) ) {
+						return $this->$sCallMethod( $mHandler, $aArgs );
 					}
 				}
 				
