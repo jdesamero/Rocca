@@ -6,7 +6,7 @@ echo "\n\n";
 // echo phpversion();
 
 
-require_once 'library/Rocca/Autoload.php';
+require_once( sprintf( '%s/library/Rocca/Autoload.php', dirname( __FILE__ ) ) );
 
 Rocca_Autoload::getInstance()
 	->registerNamespace( 'RoccaTest' )

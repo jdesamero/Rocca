@@ -21,30 +21,40 @@ class Rocca_Model_Collection extends Rocca_Collection {
 	// implement member formatter
 	public function formatMember( $mMember ) {
 		
-		if ( is_array( $mMember ) ) {
-			$mRes = new $this->_sModelClass( $mMember );
-		} else {
+		if (
+			( is_object( $mMember ) ) &&
+			( $mMember instanceof Rocca_Model )
+		) {
+			
+			// already a model
 			$mRes = $mMember;
+			
+		} elseif ( $mMember ) {
+			
+			$mPlugins = NULL;
+			
+			if ( $this->_bHasPlugin ) {
+				// pass my plugins to the model
+				$mPlugins = $this->_aPlugins;
+			}
+			
+			$mRes = new $this->_sModelClass( $mMember, $mPlugins );	
 		}
+		
 		
 		// parent is in "trait Rocca_Collection_Array"
 		return parent::formatMember( $mRes );
 	}
 	
 	
-	// override default
-	public function pluck( $mFormat ) {
+	//
+	public function formatPlucked( $iIdx, $mRow, $aArgs ) {
 		
+		$mFormat = array_shift( $aArgs );
+
 		$oPlaceholder = Rocca_Utility_Placeholder::create( $mFormat );
 		
-		// assemble
-		$aRes = [];
-		
-		foreach ( $this as $i => $oModel ) {
-			$aRes[] = $oModel->modelFormattedGet( $oPlaceholder, [ '__idx' => $i ] );
-		}
-		
-		return $aRes;
+		return $mRow->modelFormattedGet( $oPlaceholder, [ '__idx' => $iIdx ], $aArgs );
 	}
 	
 	

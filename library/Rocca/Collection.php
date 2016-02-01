@@ -17,7 +17,10 @@ class Rocca_Collection
 	
 	
 	//
-	public function __construct( $mMembers = NULL ) {
+	public function __construct( $mMembers = NULL, $mPlugin = NULL ) {
+		
+		$this->addPlugins( $mPlugin );
+		
 		
 		// used potentially by "related" classes
 		$this->_sInstanceClass = get_class( $this );
@@ -38,15 +41,15 @@ class Rocca_Collection
 	
 	
 	// inspired by Backbone.js
-	public function pluck( $sKey ) {
+	public function pluck() {
+		
+		$aArgs = func_get_args();
 		
 		// assemble
 		$aRes = [];
 		
 		foreach ( $this as $i => $mRow ) {
-			if ( is_array( $mRow ) && array_key_exists( $sKey, $mRow ) ) {
-				$aRes[] = $mRow[ $sKey ];
-			}
+			$aRes[] = $this->formatPlucked( $i, $mRow, $aArgs );
 		}
 		
 		return $aRes;
@@ -54,8 +57,35 @@ class Rocca_Collection
 	
 	
 	//
-	public function implode( $sFormat, $sDelim = ', ' ) {
-		return implode( $sDelim, $this->pluck( $sFormat ) );
+	public function formatPlucked( $iIdx, $mRow, $aArgs ) {
+		
+		if ( is_array( $mRow ) && array_key_exists( $sKey, $mRow ) ) {
+			
+			$sKey = $aArgs[ 0 ];
+			
+			return $mRow[ $sKey ];
+		}
+		
+		return NULL;
+	}
+	
+	
+	//
+	public function implode() {
+		
+		$aArgs = func_get_args();
+		
+		$sFormat = array_shift( $aArgs );
+		$sDelim = array_shift( $aArgs );
+		
+		if ( NULL === $sDelim ) {
+			$sDelim = ', ';
+		}
+		
+		// put it back into the beginning
+		array_unshift( $aArgs, $sFormat );
+		
+		return implode( $sDelim, call_user_func_array( [ $this, 'pluck' ], $aArgs ) );
 	}
 	
 	

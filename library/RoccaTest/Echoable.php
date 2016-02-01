@@ -12,9 +12,10 @@ class RoccaTest_Echoable extends Rocca_UnitTest
 		
 		$oSimple = new RoccaTest_Fixtures_Echoable_Simple();
 		// $oSimple->echoMessage() should call'ed $oSimple->getMessage()
-
+		
+		
 		$oModel = new RoccaTest_Fixtures_Echoable_Model();
-
+		
 		
 		$this
 			

@@ -6,21 +6,19 @@ class RoccaTest_Fixtures_Echoable_Model
 	
 	use Rocca_Model_GetSet;
 	use Rocca_Echoable;
+	use Rocca_Plugin_Assign;
 	use Rocca_HandleCall;
 	
 	
 	protected $_aCallables = [ 'Echo', 'Model' ];
 	
-	protected $_aModelDefaultValues = [
-		'id' => 37231,
-		'name' => 'Irving Ross'
-	];
-	
-	
 	
 	
 	//
 	public function __construct() {
+		
+		$this->addPlugins( 'RoccaTest_Fixtures_Echoable_Model_Plugin' );
+		
 		$this->modelInit();
 	}
 	

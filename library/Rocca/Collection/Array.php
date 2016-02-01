@@ -66,7 +66,12 @@ trait Rocca_Collection_Array
 	
 	//
 	public function offsetSet( $iOffset, $mValue ) {
-		$this->_aCollection[ $iOffset ] = $mValue;
+		
+		if ( NULL === $iOffset ) {
+			$this->_aCollection[] = $this->formatMember( $mValue );
+		} else {
+			$this->_aCollection[ $iOffset ] = $this->formatMember( $mValue );		
+		}
 	}
 	
 	//

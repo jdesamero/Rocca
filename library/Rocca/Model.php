@@ -15,13 +15,12 @@ class Rocca_Model
 	protected $_sInstanceClass = NULL;
 	protected $_sCollectionClass = NULL;
 	
-	protected $_aModelPropMapping = [];						// aliasing system
-	protected $_bUseModelPropMapping = TRUE;
-	
 	
 	
 	//
-	public function __construct( $aModel = NULL ) {
+	public function __construct( $mModelData = NULL, $mPlugin = NULL ) {
+		
+		$this->addPlugins( $mPlugin );
 		
 		
 		// resolve related classes
@@ -33,24 +32,16 @@ class Rocca_Model
 		);
 		
 		
-		/* TO DO: Model property mapping might work better as part of class handler as these values
-		 * are shared among the model instances for the particular class
-		 *
-		 * $this->_aModelPropMapping in theory may work as an instance override (rarely used)
-		 */
-		
-		
-		// class handler init, this can only happen once
-		Rocca_Class_Handler::factory(
-			$this->_sInstanceClass, sprintf( '%s_ClassHandler', __CLASS__ ), $this->_aModelPropMapping
-		);
-		
+		// format model data via plugins, if applicable
+		if ( $this->_bHasPlugin ) {
+			$mModelData = $this->applyPluginFilter( 'formatModelData', $mModelData );
+		}
 		
 		
 		// set model properties
 		
-		if ( is_array( $aModel ) ) {
-			$this->modelRawSet( $aModel );
+		if ( is_array( $mModelData ) ) {
+			$this->modelRawSet( $mModelData );
 		} else {
 			$this->modelInit();			// set with $this->_aModelDefaultValues, if defined
 		}
