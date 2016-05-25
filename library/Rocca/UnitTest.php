@@ -21,7 +21,7 @@ class Rocca_UnitTest
 	//// static methods
 	
 	//
-	public function runAll( $aParams = [] ) {
+	public static function runAll( $aParams = [] ) {
 		
 		// setup params
 		
@@ -95,7 +95,9 @@ class Rocca_UnitTest
 	//
 	public function doInit() {
 		
-		Rocca_Singleton::doInit();
+		if ( get_parent_class() ) {
+			parent::doInit();
+		}
 		
 		$this->_aResults = new Rocca_UnitTest_Result_Collection();
 		

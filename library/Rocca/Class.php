@@ -5,7 +5,7 @@ class Rocca_Class
 {
 	
 	//
-	public function resolveRelated( $sInstanceClass, $sAddSuffix, $sRemoveSuffix = '', $sDefaultClass = '' ) {
+	public static function resolveRelated( $sInstanceClass, $sAddSuffix, $sRemoveSuffix = '', $sDefaultClass = '' ) {
 		
 		// a "hard-coded" default class was provided, so skip resolution process
 		if ( $sDefaultClass ) {

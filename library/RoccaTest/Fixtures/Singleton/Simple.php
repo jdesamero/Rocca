@@ -14,7 +14,9 @@ class RoccaTest_Fixtures_Singleton_Simple
 	//
 	public function doInit( $sPassParam ) {
 		
-		Rocca_Singleton::doInit();
+		if ( get_parent_class() ) {
+			parent::doInit();
+		}
 		
 		$this->_sOther = 'Init was CALLED';
 		$this->_sPassParam = $sPassParam;

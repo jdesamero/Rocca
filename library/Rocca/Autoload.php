@@ -50,7 +50,9 @@ class Rocca_Autoload
 	//
 	public function doInit() {
 		
-		Rocca_Singleton::doInit();
+		if ( get_parent_class() ) {
+			parent::doInit();
+		}
 		
 		$this->registerPath( dirname( dirname( __FILE__ ) ) );
 		

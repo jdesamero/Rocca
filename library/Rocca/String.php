@@ -6,7 +6,7 @@ class Rocca_String
 	
 	
 	// returns string
-	public function fromOb() {
+	public static function fromOb() {
 		
 		$aArgs = func_get_args();
 		
@@ -22,7 +22,7 @@ class Rocca_String
 	
 	
 	// returns string
-	public function fromObArray( $fOutputCb, $aArgs = [] ) {
+	public static function fromObArray( $fOutputCb, $aArgs = [] ) {
 		
 		ob_start();
 		call_user_func_array( $fOutputCb, $aArgs );
@@ -37,7 +37,7 @@ class Rocca_String
 	/* break a large blob of text into chunks
 	 * $sBreakPoints are allowed characters where breaks can take place
 	 */
-	public function chunk( $sText, $iChunkLen = 255, $sBreakPoints = " .,!?:;\n\r\t" ) {
+	public static function chunk( $sText, $iChunkLen = 255, $sBreakPoints = " .,!?:;\n\r\t" ) {
 		
 		if ( strlen( $sText ) <= $iChunkLen ) {
 			return $sText;

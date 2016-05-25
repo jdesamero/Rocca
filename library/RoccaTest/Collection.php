@@ -11,17 +11,18 @@ class RoccaTest_Collection extends Rocca_UnitTest
 		
 		
 		$aBase = new Rocca_Collection( [
-			[	'id' => 101,
+			[
+				'id' => 101,
 				'username' => 'foo',
 				'first_name' => 'Reg',
 				'last_name' => 'Footman'
-			],
-			[	'id' => 102,
+			], [
+				'id' => 102,
 				'username' => 'bar',
 				'first_name' => 'Leslie',
 				'last_name' => 'Barrie'
-			],
-			[	'id' => 103,
+			], [
+				'id' => 103,
 				'username' => 'baz',
 				'first_name' => 'Count',
 				'last_name' => 'Basie'
@@ -48,12 +49,13 @@ class RoccaTest_Collection extends Rocca_UnitTest
 			
 			
 			$aBase->add( [
-				[	'id' => 105,
+				[
+					'id' => 105,
 					'username' => 'quux',
 					'first_name' => 'Pancho',
 					'last_name' => 'Sanchez'			
-				],
-				[	'id' => 106,
+				], [
+					'id' => 106,
 					'username' => 'corge',
 					'first_name' => 'Billy',
 					'last_name' => 'Corgan'			
@@ -111,13 +113,14 @@ class RoccaTest_Collection extends Rocca_UnitTest
 		
 		// the class below will prefix the keys with "some-"
 		$aSimple = new RoccaTest_Fixtures_Collection_Simple( [
-			[	'id' => 216,
+			[
+				'id' => 216,
 				'username' => 'spam'
-			],
-			[	'id' => 217,
+			], [
+				'id' => 217,
 				'username' => 'eggs'
-			],
-			[	'id' => 218,
+			], [
+				'id' => 218,
 				'username' => 'tomato'
 			]
 		] );

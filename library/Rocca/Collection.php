@@ -59,9 +59,9 @@ class Rocca_Collection
 	//
 	public function formatPlucked( $iIdx, $mRow, $aArgs ) {
 		
+		$sKey = $aArgs[ 0 ];
+		
 		if ( is_array( $mRow ) && array_key_exists( $sKey, $mRow ) ) {
-			
-			$sKey = $aArgs[ 0 ];
 			
 			return $mRow[ $sKey ];
 		}

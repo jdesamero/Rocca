@@ -2,8 +2,16 @@
 
 echo "\n\n";
 
-// echo 'Foo Bar... ';
-// echo phpversion();
+$sPhpVersion = phpversion();
+
+if ( 0 === strpos( $sPhpVersion, '7' ) ) {
+	
+	error_reporting( E_ALL & ~E_NOTICE );
+	
+} else {
+
+}
+
 
 
 require_once( sprintf( '%s/library/Rocca/Autoload.php', dirname( __FILE__ ) ) );
@@ -18,7 +26,8 @@ Rocca_UnitTest::runAll( [
 	
 	'show_errors_only' => FALSE,
 	
-	'run_start_callback' => function() {
+	'run_start_callback' => function() use ( $sPhpVersion ) {
+		printf( "PHP %s\n\n", $sPhpVersion );
 		echo "================================= Starting Unit Tests =================================\n\n";
 	},
 	

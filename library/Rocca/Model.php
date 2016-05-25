@@ -14,22 +14,39 @@ class Rocca_Model
 	
 	protected $_sInstanceClass = NULL;
 	protected $_sCollectionClass = NULL;
+	protected $_sDefaultPluginClass = NULL;
 	
 	
 	
 	//
 	public function __construct( $mModelData = NULL, $mPlugin = NULL ) {
 		
-		$this->addPlugins( $mPlugin );
-		
-		
 		// resolve related classes
 		
-		$this->_sInstanceClass = get_class( $this );
+		$sInstanceClass = get_class( $this );
 		
-		$this->_sCollectionClass = Rocca_Class::resolveRelated(
-			$this->_sInstanceClass, '_Collection', NULL, $this->_sCollectionClass
+		$sCollectionClass = Rocca_Class::resolveRelated(
+			$sInstanceClass, '_Collection', NULL, $sCollectionClass
 		);
+		
+		$sDefaultPluginClass = Rocca_Class::resolveRelated(
+			$sInstanceClass, '_Plugin', NULL, $sDefaultPluginClass
+		);
+		
+		
+		$this->_sInstanceClass = $sInstanceClass;
+		$this->_sCollectionClass = $sCollectionClass;
+		$this->_sDefaultPluginClass = $sDefaultPluginClass;
+		
+		
+		//
+		if ( $sDefaultPluginClass ) {
+			$mPlugin = $this->pushPlugin( $mPlugin, $sDefaultPluginClass );
+		}
+		
+		// add plugins
+		$this->addPlugins( $mPlugin );
+		
 		
 		
 		// format model data via plugins, if applicable

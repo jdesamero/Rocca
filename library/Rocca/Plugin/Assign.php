@@ -10,6 +10,25 @@ trait Rocca_Plugin_Assign
 	
 	
 	
+	// for now, $mPushPlugin is plugin class name
+	public function pushPlugin( $mPlugin, $mPushPlugin ) {
+		
+		if ( NULL === $mPlugin ) {
+			
+			$mPlugin = $mPushPlugin;
+			
+		} elseif (
+			( is_array( $mPlugin ) ) && 
+			( !in_array( $mPushPlugin, $mPlugin ) )
+		) {
+			
+			$mPlugin[] = $mPushPlugin;
+		}
+		
+		return $mPlugin;
+	}
+	
+	
 	//
 	public function addPlugins( $mPlugin = NULL ) {
 		
@@ -49,7 +68,10 @@ trait Rocca_Plugin_Assign
 		}
 		
 		
-		if ( is_object( $oPlugin ) ) {
+		if (
+			( is_object( $oPlugin ) ) && 
+			( !in_array( $oPlugin, $this->_aPlugins, TRUE ) )
+		) {
 			
 			if ( method_exists( $oPlugin, 'init' ) ) {
 				$oPlugin->init();
