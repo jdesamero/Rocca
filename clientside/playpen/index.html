@@ -1,0 +1,407 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+
+<head profile="http://gmpg.org/xfn/11">
+	
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Rocca JS</title>
+
+<style type="text/css">
+
+#list-view-container ul {
+	border: solid 1px #000;
+	padding: 12px 12px 12px 26px;
+}
+
+form.edit {
+	display: none;
+}
+
+</style>
+
+
+<script src="../js/jquery-latest.min.js" type="text/javascript"></script>
+<!-- <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script> -->
+
+<script src="../js/string_format.js" type="text/javascript"></script>
+<!-- <script src="js/jquery.geko_util.js" type="text/javascript"></script> -->
+
+<script src="../library/Rocca.js" type="text/javascript"></script>
+<script src="../library/Rocca/Dispatcher.js" type="text/javascript"></script>
+<script src="../library/Rocca/Model.js" type="text/javascript"></script>
+<script src="../library/Rocca/Collection.js" type="text/javascript"></script>
+<script src="../library/Rocca/View.js" type="text/javascript"></script>
+<script src="../library/Rocca/View/Item.js" type="text/javascript"></script>
+<script src="../library/Rocca/View/List.js" type="text/javascript"></script>
+<script src="../library/Rocca/Inspector.js" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+
+
+var MyModel = Rocca.extend( Rocca.Model, {
+
+	defaults: {
+		'id': 0,
+		'title': 'Untitled',
+		'color': 'Blank'
+	}
+
+} );
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+var MyCollection = Rocca.extend( Rocca.Collection, {
+	
+	model: MyModel
+	
+} );
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+var MyView = Rocca.extend( Rocca.View, {
+	
+	events: {
+		'model:change this': 'modelChanged',
+		'click a.btn1': 'doBtn1Stuff',
+		'click a.btn2': 'doBtn2Stuff',
+		'click a.btn3': 'doBtn3Stuff',
+		'click a.btn4': 'doBtn4Stuff',
+		'click a.btn5': 'doBtn5Stuff'
+	},
+	
+	postInit: function() {
+		
+		this.model.trigger( 'change' );
+	},
+	
+	doBtn1Stuff: function() {
+		
+		/* /
+		var oModel = Rocca.extend( MyModel, {} ).init();
+		
+		oModel.set( 'id', - oModel.__uid );
+		
+		this.collection.add( oModel );
+		/* */
+		
+		this.dispatcher.trigger( 'openitem' );
+		
+		return false;
+	},
+	
+	doBtn2Stuff: function() {
+		
+		this.model.set( 'color', 'Green' );
+		
+		return false;
+	},
+	
+	doBtn3Stuff: function() {
+		
+		var oMembers = this.collection.members;
+		
+		console.log( '------ start ------' );
+
+		console.log( 'Length: %d'.printf( oMembers.length ) );
+		
+		console.log( this.collection.toJsonEncodable() );
+		
+		var eVtest = this.$( 'div.vtest' );
+		
+		eVtest.html( '' );
+		
+		Rocca.each( this.listView.itemViews, function( k, v ) {
+			eVtest.append( '<div>%s</div>'.printf( k ) );
+		} );
+		
+		console.log( '------ end ------' );
+		
+		return false;
+	},
+	
+	doBtn4Stuff: function() {
+		
+		var oMew = this.collection.get( 1 );
+		
+		oMew.destroy();
+		
+		return false;
+	},
+	
+	doBtn5Stuff: function() {
+		
+		var oMew = this.collection.get( 2 );
+		
+		oMew.set( 'title', 'Oscar the Grouch' );
+		
+		return false;
+	},
+	
+	modelChanged: function( e ) {
+		
+		this.$html( '.color', this.model.get( 'color' ) );
+		
+	}
+	
+} );
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+var MyItemView = Rocca.extend( Rocca.View.Item, {
+
+	// tmpl: '<li><a href="#"></a> (<span></span>)</li>',
+	tmpl: Rocca.tmpl( '#list-view-tmpl' ),
+	
+	events: {
+		'click a.del': 'removeItem',
+		'click a.color': 'openEditForm'
+	},
+	
+	updateView: function() {
+		
+		var oModel = this.model;
+		var sTitle = '%d: %s'.printf( oModel.get( 'id' ), oModel.get( 'title' ) );
+		
+		this
+			.$html( 'a.color', oModel.get( 'color' ) )
+			.$html( 'span.title', sTitle )
+		;
+		
+	},
+	
+	removeItem: function() {
+		
+		if ( confirm( 'Are you sure you want to remove this item?' ) ) {
+			
+			this.model.destroy();
+		}
+		
+		return false;
+	},
+	
+	openEditForm: function() {
+		
+		this.listView.dispatcher.trigger( 'edititem', [ this.model ] );
+		
+		return false;
+	}
+	
+} );
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+var MyListView = Rocca.extend( Rocca.View.List, {
+	
+	appendTarget: 'ul',
+	
+	itemView: MyItemView,
+	
+	
+	lengthChanged: function( e, iCurLen ) {
+		
+		if ( !iCurLen ) {
+			
+			this.$hide( 'ul' );
+			this.$show( 'p.no-items' );
+			
+		} else {
+			
+			this.$show( 'ul' );
+			this.$hide( 'p.no-items' );
+		}
+		
+	}
+	
+} );
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+var MyFormView = Rocca.extend( Rocca.View, {
+	
+	model: MyModel,
+	
+	events: {
+		'dispatcher:openitem this': 'openAddForm',
+		'dispatcher:edititem this': 'openEditForm',
+		'submit this': 'addEditModel'
+	},
+	
+	openAddForm: function( e ) {
+		
+		this
+			.$val( '.color', '' )
+			.$val( '.title', '' )
+			.$html( 'p.form_title', 'Add Item' )
+			.$val( 'input[type="submit"]', 'Add Item' )
+			.$show()
+		;
+		
+		return false;
+	},
+	
+	openEditForm: function( e, oModel ) {
+		
+		this.curModel = oModel;
+		
+		this
+			.$val( '.color', oModel.get( 'color' ) )
+			.$val( '.title', oModel.get( 'title' ) )
+			.$html( 'p.form_title', 'Edit Item' )
+			.$val( 'input[type="submit"]', 'Edit Item' )
+			.$show()
+		;
+		
+		return false;
+	},
+	
+	addEditModel: function() {
+		
+		var oModel = this.curModel;
+		
+		if ( !oModel ) {
+			
+			oModel = Rocca.extend( this.model ).init();
+			oModel.set( 'id', oModel.getUid() );
+			
+			this.collection.add( oModel );
+		}
+		
+		oModel
+			.set( 'color', this.$val( '.color' ) )
+			.set( 'title', this.$val( '.title' ) )
+		;
+		
+		this.$hide();
+		
+		return false;
+	}
+	
+} );
+
+
+// -------------------------------------------------------------------------------------------------
+
+jQuery( document ).ready( function( $ ) {
+	
+	//
+	var oModel = Rocca.extend( MyModel, {
+		vals: {
+			'id': 20,
+			'color': 'Red'
+		}
+	} ).init();
+	
+	
+	var oCollection = Rocca.extend( MyCollection, {
+		/* members: [], */
+		members: [
+			{ 'id': 101, 'color': 'Green' },
+			{ 'id': 102, 'color': 'Blue', 'title': 'The Deep Blue Sea' },
+			{ 'id': 103, 'color': 'Purple' }
+		]
+	} ).init();
+	
+		
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	
+	var oDispatcher = Rocca.extend( Rocca.Dispatcher );
+	
+	
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+	
+	var oListView = Rocca.extend( MyListView, {
+		collection: oCollection,
+		$el: $( '#list-view-container' ),
+		dispatcher: oDispatcher
+	} ).init();
+	
+	// $( '#hr2' ).after( oListView.$el );
+	
+	var oFormView = Rocca.extend( MyFormView, {
+		$el: $( 'form' ),
+		dispatcher: oDispatcher,
+		collection: oCollection
+	} ).init();
+	
+	
+	//
+	var oControlView = Rocca.extend( MyView, {
+		model: oModel,
+		collection: oCollection,
+		$el: $( 'div.widget' ),
+		dispatcher: oDispatcher,
+		listView: oListView
+	} ).init();
+	
+	
+	
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	
+	var oInspectorView = Rocca.extend( Rocca.Inspector, {
+		collectionHash: {
+			'items': { title: 'Items Collection', collection: oCollection },
+			'model': { title: 'Model', model: oModel }
+		}
+	} ).init();
+	
+	$( '#hr3' ).after( oInspectorView.$el );
+	
+} );
+
+
+</script>
+
+	
+</head>
+
+<body>
+
+<h1>Rocca JS</h1>
+
+<hr />
+
+<div class="widget">
+	<a href="#" class="btn1">Add to Collection</a> |
+	<a href="#" class="btn2">Change Color</a> | 
+	<a href="#" class="btn3">View</a> | 
+	<a href="#" class="btn4">Delete</a> | 
+	<a href="#" class="btn5">Set Title</a>
+	<p class="color"></p>
+	<div class="vtest"></div>
+</div>
+
+<hr id="hr2" />
+
+<div id="list-view-container">
+	<p class="no-items">Sorry, there are no items to display!</p>
+	<ul></ul>
+</div>
+
+<script id="list-view-tmpl" type="text/x-jquery-tmpl">
+	<li>
+		[<a href="#" class="del">Del</a>] 
+		<a href="#" class="color"></a> 
+		(<span class="title"></span>)
+	</li>
+</script>
+
+<form class="edit">
+	<p class="form_title"></p>
+	<label>Color: </label> <input type="text" class="color" value="" /><br />
+	<label>Title: </label> <input type="text" class="title" value="" /><br />
+	<input type="submit" value="" />
+</form>
+
+<hr id="hr3" />
+
+</body>
+
+</html>
