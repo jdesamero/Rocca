@@ -8,7 +8,7 @@
 		
 		init: function() {
 			
-			this.results = {};
+			this.results = Rocca.extend( Rocca.UnitTest.Result.Collection ).init();
 			
 			return this;
 		},
@@ -17,7 +17,12 @@
 			
 			var oCompare = Rocca.UnitTest.Compare[ sType ];
 			
-			this.results[ sKey ] = oCompare.getResult( mValue, mCompare );
+			// sKey
+			
+			this.results.add( Rocca.extend( Rocca.UnitTest.Result, {
+				key: sKey,
+				vals: oCompare.getResult( mValue, mCompare )
+			} ).init() );
 			
 			return this;
 		}

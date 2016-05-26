@@ -30,6 +30,8 @@
 <script src="library/Rocca/UnitTest.js" type="text/javascript"></script>
 <script src="library/Rocca/UnitTest/Compare.js" type="text/javascript"></script>
 <script src="library/Rocca/UnitTest/Compare/StrictlyEqual.js" type="text/javascript"></script>
+<script src="library/Rocca/UnitTest/Result.js" type="text/javascript"></script>
+<script src="library/Rocca/UnitTest/Result/Collection.js" type="text/javascript"></script>
 
 
 <script src="library/RoccaTest.js" type="text/javascript"></script>
@@ -49,16 +51,18 @@ var TestView = Rocca.extend( Rocca.View, {
 	
 		var _this = this;
 		
-		Rocca.each( this.results, function( k, v ) {
-			
-			if ( !v ) v = {};
+		this.results.each( function( k, v ) {
 			
 			var eTr = $( '<tr><\/tr>' );
 			
-			eTr.append( $( '<td><\/td>' ).html( k ) );
-			eTr.append( $( '<td><\/td>' ).html( v.fail_message ) );
-			eTr.append( $( '<td><\/td>' ).html( v.expected_value ) );
-			eTr.append( $( '<td><\/td>' ).html( v.result_value ) );
+			var aFields = [ 'key', 'fail_message', 'expected_value', 'result_value' ];
+			
+			Rocca.each( aFields, function( i1, v1 ) {
+				
+				var eTd = $( '<td><\/td>' ).html( v.get( v1 ) );
+				eTr.append( eTd );
+				
+			} );
 			
 			_this.$append( 'tbody', eTr );
 			

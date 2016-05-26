@@ -64,7 +64,13 @@
 		toJsonEncodable: function() {
 			
 			return this.vals;
+		},
+		
+		each: function( cEach ) {
+			
+			return Rocca.each.call( this, this.vals, cEach );
 		}
+		
 		
 	} );
 	
