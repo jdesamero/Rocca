@@ -8,6 +8,30 @@
 
 <style type="text/css">
 
+div.unit_test {
+	margin: 18px 0;
+}
+
+div.unit_test div.title {
+	font-weight: bold;
+}
+
+div.unit_test div.results {
+	margin: 12px 0;
+}
+
+
+span[data-status="success"] {
+	color: green;
+}
+
+span[data-status="failed"] {
+	color: red;
+}
+
+span[data-status="waiting"] {
+	color: orange;
+}
 
 </style>
 
@@ -34,11 +58,14 @@
 <script src="library/Rocca/UnitTest/Result/Collection.js" type="text/javascript"></script>
 
 
-<script src="library/RoccaTest.js" type="text/javascript"></script>
+<script data-is-test="1" src="library/RoccaTest.js" type="text/javascript"></script>
+<script data-is-test="1" src="library/RoccaTest/Collection.js" type="text/javascript"></script>
+<script data-is-test="1" src="library/RoccaTest/Dispatcher.js" type="text/javascript"></script>
+
 
 <script type="text/javascript">
 
-( function( $, _r ) {
+( function( $, _r, _t ) {
 	
 	var ItemView = _r.extend( _r.View.Item, {
 		
@@ -47,14 +74,30 @@
 		updateView: function() {
 			
 			var oModel = this.model;
+			var sStatus, sMsg;
+			
+			if ( oModel.getFailed() ) {
+				
+				sStatus = 'Failed';
+				sMsg = ' --> %s Expected: %s, result: %s.'.printf(
+					oModel.get( 'fail_message' ),
+					oModel.get( 'expected_value' ),
+					oModel.get( 'result_value' )
+				);
+				
+			} else {
+				
+				sStatus = 'Success';
+				sMsg = '';
+				
+			}
 			
 			this
-				.$html( '[data-field="key"]', oModel.get( 'key' ) )
-				.$html( '[data-field="fail_message"]', oModel.get( 'fail_message' ) )
-				.$html( '[data-field="expected_value"]', oModel.get( 'expected_value' ) )
-				.$html( '[data-field="result_value"]', oModel.get( 'result_value' ) )
+				.$html( 'span.status', '%s!'.printf( sStatus ) )
+				.$html( 'span.message', '%s%s'.printf( oModel.getTitle(), sMsg ) )
 			;
 			
+			this.$( 'span.status' ).attr( 'data-status', sStatus.toLowerCase() );
 		}
 		
 	} );
@@ -63,9 +106,15 @@
 		
 		tmpl: _r.tmpl( '#list-view-tmpl' ),
 		
-		appendTarget: 'tbody',
+		appendTarget: 'ul',
 		
-		itemView: ItemView
+		itemView: ItemView,
+		
+		postInit: function() {
+			
+			this.$html( 'div.title span', this.label );
+			
+		}
 		
 	} );
 	
@@ -75,17 +124,53 @@
 	
 	$( document ).ready( function() {
 		
-		RoccaTest.init().run();
+		var aTests = [];
+				
+		$( 'script[data-is-test="1"]' ).each( function() {
+			
+			var eScript = $( this );
+			var sSrc = eScript.attr( 'src' );
+			
+			var aMatch = sSrc.match( /library\/(.+)\.js/ );
+			var aParts = aMatch[ 1 ].split( '\/' );
+			
+			var oPart = window;
+			
+			_r.each( aParts, function( i, sPart ) {
+				oPart = oPart[ sPart ];
+			} );
+			
+			aTests.push( {
+				'label': aParts.join( '.' ),
+				'run': oPart
+			} );
+			
+		} );
 		
-		var oListView = _r.extend( ListView, {
-			collection: RoccaTest.results
-		} ).init();
 		
-		$( 'hr' ).after( oListView.$el );
 		
+		var eAppend = $( 'hr' );
+		
+		_r.each( aTests, function( i, oTest ) {
+			
+			var sLabel = oTest.label;
+			var oRunTest = oTest.run;
+			
+			oRunTest.init().run();
+			
+			var oListView = _r.extend( ListView, {
+				collection: oRunTest.results,
+				label: sLabel
+			} ).init();
+			
+			eAppend.after( oListView.$el );
+			eAppend = oListView.$el;
+			
+		} );
+			
 	} );
 	
-} )( jQuery, Rocca );
+} )( jQuery, Rocca, RoccaTest );
 
 </script>
 
@@ -99,26 +184,14 @@
 <hr />
 
 <script id="list-view-tmpl" type="text/x-jquery-tmpl">
-	<table>
-		<thead>
-			<tr>
-				<th>Key</th>
-				<th>Fail Message</th>
-				<th>Expected Value</th>
-				<th>Result Value</th>
-			</tr>
-		</thead>
-		<tbody></tbody>
-	</table>
+	<div class="unit_test">
+		<div class="title">Running Test: <span></span></div>
+		<ul></ul>
+	</div>
 </script>
 
 <script id="item-view-tmpl" type="text/x-jquery-tmpl">
-	<tr>
-		<td data-field="key"></td>
-		<td data-field="fail_message"></td>
-		<td data-field="expected_value"></td>
-		<td data-field="result_value"></td>
-	</tr>
+	<li><span class="status"></span>: <span class="message"></span></li>
 </script>
 
 

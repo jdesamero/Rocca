@@ -1,13 +1,13 @@
-( function( $, Rocca ) {
+( function( $, _r ) {
 	
-	this.RoccaTest = Rocca.extend( Rocca.UnitTest, {
+	this.RoccaTest = _r.extend( _r.UnitTest, {
 		
 		run: function() {
 			
 			var aTest = [ 1, 2, 3, 4 ];
 			var aCopy = [];
 			
-			Rocca.each( aTest, function( i, v ) {
+			_r.each( aTest, function( i, v ) {
 				aCopy.push( v );
 			} );
 			
@@ -19,7 +19,7 @@
 			var oCopy = {};
 			
 			var iCount = 0;
-			Rocca.each( oTest, function( k, v ) {
+			_r.each( oTest, function( k, v ) {
 				oCopy[ k ] = v;
 				iCount++;
 			} );
