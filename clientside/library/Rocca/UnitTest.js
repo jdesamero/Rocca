@@ -1,25 +1,25 @@
-( function( $, Rocca ) {
+( function( $, _r ) {
 	
-	Rocca.UnitTest = Rocca.extend( Rocca.Base, {
+	_r.UnitTest = _r.extend( _r.Base, {
 		
 		results: null,
 		
-		run: Rocca.emptyFunc,
+		run: _r.emptyFunc,
 		
 		init: function() {
 			
-			this.results = Rocca.extend( Rocca.UnitTest.Result.Collection ).init();
+			this.results = _r.extend( _r.UnitTest.Result.Collection ).init();
 			
 			return this;
 		},
 		
 		assert: function( sType, sKey, mValue, mCompare ) {
 			
-			var oCompare = Rocca.UnitTest.Compare[ sType ];
+			var oCompare = _r.UnitTest.Compare[ sType ];
 			
 			// sKey
 			
-			this.results.add( Rocca.extend( Rocca.UnitTest.Result, {
+			this.results.add( _r.extend( _r.UnitTest.Result, {
 				key: sKey,
 				vals: oCompare.getResult( mValue, mCompare )
 			} ).init() );

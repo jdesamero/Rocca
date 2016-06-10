@@ -1,5 +1,5 @@
-( function( $, Rocca ) {
+( function( $, _r ) {
 	
-	Rocca.Dispatcher = Rocca.extend( Rocca.Base, Rocca.Events );
+	_r.Dispatcher = _r.extend( _r.Base, _r.Events );
 	
 } )( jQuery, Rocca );

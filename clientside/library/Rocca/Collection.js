@@ -1,6 +1,6 @@
-( function( $, Rocca ) {
+( function( $, _r ) {
 	
-	Rocca.Collection = Rocca.extend( Rocca.Base, Rocca.Events, {
+	_r.Collection = _r.extend( _r.Base, _r.Events, {
 		
 		length: 0,
 		
@@ -18,7 +18,7 @@
 			
 			this.members = [];
 			
-			Rocca.each( aMembersTmp, function( i, v ) {
+			_r.each( aMembersTmp, function( i, v ) {
 				
 				_this.add( v );
 				
@@ -40,7 +40,7 @@
 			
 			} else {
 				
-				oPush = Rocca.extend( this.model, {
+				oPush = _r.extend( this.model, {
 					vals: mData
 				} ).init();
 				
@@ -92,7 +92,7 @@
 		
 		each: function( cEach ) {
 			
-			return Rocca.each.call( this, this.members, cEach );
+			return _r.each.call( this, this.members, cEach );
 		},
 		
 		

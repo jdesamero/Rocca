@@ -1,6 +1,6 @@
-( function( $, Rocca ) {
+( function( $, _r ) {
 	
-	Rocca.UnitTest.Compare.StrictlyEqual = Rocca.extend( Rocca.UnitTest.Compare, {
+	_r.UnitTest.Compare.StrictlyEqual = _r.extend( _r.UnitTest.Compare, {
 		
 		failMessage: 'Values are not strictly equal!',
 		

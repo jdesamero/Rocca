@@ -1,6 +1,6 @@
-( function( $, Rocca ) {
+( function( $, _r ) {
 	
-	Rocca.UnitTest.Compare = Rocca.extend( Rocca.Base, {
+	_r.UnitTest.Compare = _r.extend( _r.Base, {
 		
 		failMessage: '',
 		value: null,

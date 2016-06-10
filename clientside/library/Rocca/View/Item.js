@@ -1,6 +1,6 @@
-( function( $, Rocca ) {
+( function( $, _r ) {
 	
-	Rocca.View.Item = Rocca.extend( Rocca.View, {
+	_r.View.Item = _r.extend( _r.View, {
 		
 		tmpl: '<li><\/li>',
 		
@@ -11,7 +11,7 @@
 		
 		init: function() {
 			
-			Rocca.View.init.call( this, function() {
+			_r.View.init.call( this, function() {
 				
 				this.updateView();
 				
@@ -20,7 +20,7 @@
 			return this;
 		},
 		
-		updateView: Rocca.emptyFunc,
+		updateView: _r.emptyFunc,
 		
 		destroy: function( e, oModel ) {
 			

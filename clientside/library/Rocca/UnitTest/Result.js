@@ -1,10 +1,10 @@
-( function( $, Rocca ) {
+( function( $, _r ) {
 	
-	Rocca.UnitTest.Result = Rocca.extend( Rocca.Model, {
+	_r.UnitTest.Result = _r.extend( _r.Model, {
 		
 		init: function() {
 			
-			Rocca.Model.init.apply( this, arguments );
+			_r.Model.init.apply( this, arguments );
 			
 			if ( this.key ) {
 				this.set( 'key', this.key );

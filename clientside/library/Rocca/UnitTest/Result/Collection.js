@@ -1,8 +1,8 @@
-( function( $, Rocca ) {
+( function( $, _r ) {
 	
-	Rocca.UnitTest.Result.Collection = Rocca.extend( Rocca.Collection, {
+	_r.UnitTest.Result.Collection = _r.extend( _r.Collection, {
 		
-		model: Rocca.UnitTest.Result
+		model: _r.UnitTest.Result
 		
 	} );
 	

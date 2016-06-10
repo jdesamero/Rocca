@@ -1,6 +1,6 @@
-( function( $, Rocca ) {
+( function( $, _r ) {
 	
-	Rocca.View = Rocca.extend( Rocca.Base, {
+	_r.View = _r.extend( _r.Base, {
 		
 		$el: null,
 		
@@ -8,8 +8,8 @@
 		tmpl: '<div></div>',
 		
 		// init hooks
-		preInit: Rocca.emptyFunc,
-		postInit: Rocca.emptyFunc,
+		preInit: _r.emptyFunc,
+		postInit: _r.emptyFunc,
 		
 		init: function( cInit ) {
 			
@@ -43,7 +43,7 @@
 			
 			//// prep events
 			
-			Rocca.each( this.events, function( k, v ) {
+			_r.each( this.events, function( k, v ) {
 				
 				// find the first space char
 				var iSpacePos = k.indexOf( ' ' );

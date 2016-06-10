@@ -1,6 +1,6 @@
-( function( $, Rocca ) {
+( function( $, _r ) {
 	
-	Rocca.Model = Rocca.extend( Rocca.Base, Rocca.Events, {
+	_r.Model = _r.extend( _r.Base, _r.Events, {
 		
 		init: function() {
 			
@@ -10,7 +10,7 @@
 				this.vals = {};
 			}
 			
-			Rocca.each( this.defaults, function( k, v ) {
+			_r.each( this.defaults, function( k, v ) {
 				
 				if ( !_this.vals.hasOwnProperty( k ) ) {
 					_this.vals[ k ] = v;
@@ -68,7 +68,7 @@
 		
 		each: function( cEach ) {
 			
-			return Rocca.each.call( this, this.vals, cEach );
+			return _r.each.call( this, this.vals, cEach );
 		}
 		
 		

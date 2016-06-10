@@ -1,10 +1,10 @@
-( function( $, Rocca ) {
+( function( $, _r ) {
 	
-	var oDispatcher = Rocca.extend( Rocca.Dispatcher );
+	var oDispatcher = _r.extend( _r.Dispatcher );
 	
 	
 	// the controls
-	var ControlView = Rocca.extend( Rocca.View, {
+	var ControlView = _r.extend( _r.View, {
 		
 		tmpl: '<input type="button" class="button-primary" value="" \/>',
 		
@@ -29,7 +29,7 @@
 	
 	
 	
-	Rocca.Inspector = Rocca.extend( Rocca.View, {
+	_r.Inspector = _r.extend( _r.View, {
 		
 		tmpl: '<form>' + 
 			'<p><strong>Rocca Inspector<\/strong> &nbsp; <a href="#" class="toggle">Hide<\/a><\/p>' + 
@@ -60,15 +60,15 @@
 				
 				var bFirst = true;
 				
-				Rocca.each( oCollectionHash, function( k, v ) {
+				_r.each( oCollectionHash, function( k, v ) {
 					
 					var sTitle = ( v.title ) ? v.title : k ;
 					var oCollection = ( v.model ) ? 
-						Rocca.extend( Rocca.Collection, { members: [ v.model ] } ).init() : 
+						_r.extend( _r.Collection, { members: [ v.model ] } ).init() : 
 						v.collection
 					;
 					
-					var oControl = Rocca.extend( ControlView, {
+					var oControl = _r.extend( ControlView, {
 						collection: oCollection,
 						slug: k,
 						title: sTitle,
@@ -149,14 +149,14 @@
 					
 					_this.createColumnTitle( '__uid', eTitleTr, aKeys );
 					
-					Rocca.each( oModel.toJsonEncodable(), function( k, v ) {
+					_r.each( oModel.toJsonEncodable(), function( k, v ) {
 						_this.createColumnTitle( k, eTitleTr, aKeys );
 					} );
 					
 					// TO DO: fix assertColumns
 					if ( oCollection.assertColumns ) {
 						
-						Rocca.each( oCollection.assertColumns, function( i, v ) {
+						_r.each( oCollection.assertColumns, function( i, v ) {
 							_this.createColumnTitle( v, eTitleTr, aKeys );
 						} );
 					}
@@ -178,7 +178,7 @@
 					bAlternate = true;
 				}
 				
-				Rocca.each( aKeys, function( i, v ) {
+				_r.each( aKeys, function( i, v ) {
 					
 					var eTd = $( '<td></td>' );
 					

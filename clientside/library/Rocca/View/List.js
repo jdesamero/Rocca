@@ -1,6 +1,6 @@
-( function( $, Rocca ) {
+( function( $, _r ) {
 	
-	Rocca.View.List = Rocca.extend( Rocca.View, {
+	_r.View.List = _r.extend( _r.View, {
 		
 		itemViews: null,
 		
@@ -13,7 +13,7 @@
 		
 		init: function() {
 			
-			Rocca.View.init.call( this, function() {
+			_r.View.init.call( this, function() {
 				
 				var _this = this;
 				
@@ -32,11 +32,11 @@
 			return this;
 		},
 		
-		lengthChanged: Rocca.emptyFunc,
+		lengthChanged: _r.emptyFunc,
 		
 		addMember: function( e, oModel ) {
 	
-			var oView = Rocca.extend( this.itemView, {
+			var oView = _r.extend( this.itemView, {
 				model: oModel,
 				listView: this
 			} ).init();
