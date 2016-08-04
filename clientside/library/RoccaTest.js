@@ -24,10 +24,37 @@
 				iCount++;
 			} );
 			
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			
+			
+			var cSomeAsyncOp = function ( mVal, iDelay ) {
+				
+				return new Promise( function( cFulfill, cReject ) {
+					
+					setTimeout( function() {
+						
+						cFulfill( mVal );
+						
+					}, iDelay );
+					
+				} );
+			};
+			
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			
 			this
+				
+				// synchronous
 				.assert( 'StrictlyEqual', 'each 1', 1, aCopy.length )
 				.assert( 'StrictlyEqual', 'each 2', 1, iCount )
 				.assert( 'StrictlyEqual', 'each 3', 3, iCount )
+				
+				// asynchronous (must be provided Promise)
+				.assert( 'StrictlyEqual', 'async 1', 'foo', cSomeAsyncOp( 'foo', 2000 ) )
+				.assert( 'StrictlyEqual', 'async 2', 'bar', cSomeAsyncOp( 'barbara', 3000 ) )
+				
 			;
 			
 		}

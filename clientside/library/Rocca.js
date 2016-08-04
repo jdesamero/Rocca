@@ -137,6 +137,25 @@
 			
 		},
 		
+		//// utility methods
+		
+		isPromise: function( mCheck ) {
+			
+			if (
+				( mCheck.then ) && 
+				( 'function' === $.type( mCheck.then ) ) && 
+				( mCheck.done ) && 
+				( 'function' === $.type( mCheck.done ) )
+			) {
+				
+				return true;
+			}
+			
+			return false;
+		},
+		
+		
+		//// base mix-in
 		
 		Base: {
 			
@@ -162,7 +181,7 @@
 		},
 		
 		
-		// events mix-in
+		//// events mix-in
 		
 		Events: {
 			

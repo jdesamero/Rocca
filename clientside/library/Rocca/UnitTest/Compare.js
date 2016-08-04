@@ -16,21 +16,36 @@
 		
 		getResult: function( mValue, mCompare ) {
 			
-			var mTestValue = this.formatTestValue( mCompare, mValue );
+			var _this = this;
 			
-			this.setValues( mValue, mTestValue );
+			return new Promise( function( cFulfill, cReject ) {
 			
-			if ( !this.test() ) {
+				var oTestValue = _this.formatTestValue( mCompare, mValue );
 				
-				// return formatted values for display, should all be strings
-				return {
-					'fail_message': this.getFailMessage(),
-					'expected_value': this.getExpectedFormatted(),
-					'result_value': this.getResultFormatted()
-				};
-			}
-			
-			return {};
+				oTestValue.done( function( mTestValue ) {
+					
+					var oRet = {};
+					
+					_this.setValues( mValue, mTestValue );
+					
+					// test failed
+					if ( !_this.test() ) {
+						
+						// return formatted values for display, should all be strings
+						oRet = {
+							'fail_message': _this.getFailMessage(),
+							'expected_value': _this.getExpectedFormatted(),
+							'result_value': _this.getResultFormatted()
+						};
+					}
+					
+					oRet[ 'complete' ] = true;
+					
+					cFulfill( oRet );
+					
+				} );
+				
+			} );
 		},
 		
 		test: function() {
@@ -38,14 +53,34 @@
 		},
 		
 		formatTestValue: function( mCompare, mValue ) {
-	
-			if ( 'function' == $.type( mCompare ) ) {
-				
-				// mCompare.call( ???, mValue );
-				return mCompare( mValue );
-			}
 			
-			return mCompare;
+			return new Promise( function( cFulfill, cReject ) {
+				
+				// check mCompare
+				if ( _r.isPromise( mCompare ) ) {
+					
+					// mCompare is a Promise!
+					
+					mCompare.done( function( mRes ) {
+						
+						cFulfill( mRes );
+						
+					} );
+					
+				} else {
+					
+					// immediate gratification
+					
+					if ( 'function' == $.type( mCompare ) ) {
+						
+						// cFulfill( mCompare.call( ???, mValue ) );
+						cFulfill( mCompare( mValue ) );
+					}
+					
+					cFulfill( mCompare );
+				}
+				
+			} );
 		},
 		
 		getFailMessage: function() {

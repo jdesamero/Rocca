@@ -7,15 +7,43 @@
 			'fail_message': '',
 			'expected_value': '',
 			'result_value': '',
-			'grouping': []	
+			'grouping': [],
+			'complete': false
 		},
 		
 		init: function() {
+			
+			var _this = this;
+			
+			var oPromiseVals;
+			
+			// check if "vals" is a Promise
+			if ( this.vals && _r.isPromise( this.vals ) ) {
+				
+				oPromiseVals = this.vals;
+				this.vals = {};		// empty vals for now
+			}
+			
 			
 			_r.Model.init.apply( this, arguments );
 			
 			if ( this.key ) {
 				this.set( 'key', this.key );
+			}
+			
+			if ( oPromiseVals ) {
+				
+				// possibly deferred set()
+				oPromiseVals.done( function( oRes ) {
+					
+					_r.each( oRes, function( k, v ) {
+						
+						_this.set( k, v );
+						
+					} );
+					
+				} );
+				
 			}
 			
 			return this;
@@ -29,6 +57,11 @@
 		getTitle: function() {
 		
 			return this.get( 'key' );
+		},
+		
+		getCompleted: function() {
+			
+			return this.get( 'complete' );
 		}
 		
 	} );
